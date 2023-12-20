@@ -32,3 +32,6 @@ next-env.d.ts
 
 # credentials
 credentials.env
+
+# data
+data/
