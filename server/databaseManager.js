@@ -45,12 +45,11 @@ const insertMusic = ({ musicID, musicTitle, musicDuration }) => {
 /**
  * Insert a new playlist
  */
-const insertPlaylist = ({ playlistName, thumbnail }) => {
+const insertPlaylist = (playlistName) => {
   return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO Playlist (name, thumbnailPath) VALUES (?, ?)';
-    const values = [playlistName, thumbnail];
+    const query = `INSERT INTO Playlist (name) VALUES (${playlistName})`;
 
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(query, (err, results, fields) => {
       if (err) {
         reject(err);
         return;
@@ -63,26 +62,11 @@ const insertPlaylist = ({ playlistName, thumbnail }) => {
 /**
  * Update a specific playlist
  */
-const updatePlaylist = ({ playlistID, newName, newThumbnail }) => {
+const updatePlaylist = ({ playlistID, newName }) => {
   return new Promise((resolve, reject) => {
-    let query = 'UPDATE Playlist SET';
-    const values = [];
+    const query = `UPDATE Playlist SET name = ${newName} WHERE id = ${playlistID}`;
 
-    if (newName) {
-      query += ' name = ?,';
-      values.push(newName);
-    }
-
-    if (newThumbnail) {
-      query += ' thumbnailPath = ?,';
-      values.push(newThumbnail);
-    }
-
-    query = query.slice(0, -1);
-    query += ' WHERE id = ?';
-    values.push(playlistID);
-
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(query, (err, results, fields) => {
       if (err) {
         reject(err);
         return;
@@ -97,10 +81,9 @@ const updatePlaylist = ({ playlistID, newName, newThumbnail }) => {
  */
 const deletePlaylist = (playlistID) => {
   return new Promise((resolve, reject) => {
-    const query = 'DELETE FROM Playlist WHERE id = ?';
-    const values = [playlistID];
+    const query = `DELETE FROM Playlist WHERE id = ${playlistID}`;
 
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(query, (err, results, fields) => {
       if (err) {
         reject(err);
         return;
@@ -115,10 +98,9 @@ const deletePlaylist = (playlistID) => {
  */
 const deleteMusic = (musicID) => {
   return new Promise((resolve, reject) => {
-    const query = 'DELETE FROM Music WHERE id = ?';
-    const values = [musicID];
+    const query = `DELETE FROM Music WHERE id = ${musicID}`;
 
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(query, (err, results, fields) => {
       if (err) {
         reject(err);
         return;
@@ -133,16 +115,84 @@ const deleteMusic = (musicID) => {
  */
 const updateMusic = ({ musicID, musicTitle }) => {
   return new Promise((resolve, reject) => {
-    const query = 'UPDATE Music SET musicTitle = ? WHERE id = ?';
-    const values = [ musicTitle, musicID ];
+    const query = `UPDATE Music SET musicTitle = ${musicTitle} WHERE id = ${musicID}`;
     
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(query, (err, results, fields) => {
       if (err) {
         reject(err);
         return;
       }
       resolve(results);
     }); 
+  });
+};
+
+/**
+ * Insert a new link between a music and a playlist
+ */
+const insertPlaylistMusic = ({ playlistID, musicID }) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO Playlistmusics (playlistID, musicID) VALUES (?, ?)';
+    const values = [ playlistID, musicID ];
+
+    connection.query(query, values, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results);
+    });
+  });
+};
+
+/**
+ * Get musics depending on the offset and the limit
+ */
+const getMusics = ({ limit, offset }) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM Music LIMIT ${limit} OFFSET ${offset}`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results);
+    });
+  });
+};
+
+/**
+ * Get playlists depending on the offset and the limit
+ */
+const getPlaylists = ({ limit, offset }) => {
+  return new Promise((resolve, reject) => {
+    const query =  `SELECT * FROM Playlist LIMIT ${limit} OFFSET ${offset}`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results);
+    });
+  });
+};
+
+/**
+ * Get the playlist musics
+ */
+const getPlayistMusics = ({ playlistID, limit, offset }) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM Playlistmusics WHERE playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results);
+    });
   });
 };
 
@@ -159,4 +209,4 @@ const endDatabase = () => {
   });
 };
 
-module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic};
+module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics};
