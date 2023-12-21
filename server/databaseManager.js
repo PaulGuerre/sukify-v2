@@ -47,7 +47,7 @@ const insertMusic = ({ musicID, musicTitle, musicDuration }) => {
  */
 const insertPlaylist = (playlistName) => {
   return new Promise((resolve, reject) => {
-    const query = `INSERT INTO Playlist (name) VALUES (${playlistName})`;
+    const query = `INSERT INTO Playlist (name) VALUES ('${playlistName}')`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -64,7 +64,7 @@ const insertPlaylist = (playlistName) => {
  */
 const updatePlaylist = ({ playlistID, newName }) => {
   return new Promise((resolve, reject) => {
-    const query = `UPDATE Playlist SET name = ${newName} WHERE id = ${playlistID}`;
+    const query = `UPDATE Playlist SET name = '${newName}' WHERE id = ${playlistID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -115,7 +115,7 @@ const deleteMusic = (musicID) => {
  */
 const updateMusic = ({ musicID, musicTitle }) => {
   return new Promise((resolve, reject) => {
-    const query = `UPDATE Music SET musicTitle = ${musicTitle} WHERE id = ${musicID}`;
+    const query = `UPDATE Music SET musicTitle = '${musicTitle}' WHERE id = ${musicID}`;
     
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -197,6 +197,23 @@ const getPlayistMusics = ({ playlistID, limit, offset }) => {
 };
 
 /**
+ * Delete the music from the playlist
+ */
+const deletePlaylistMusic = ({ playlistID, musicID }) => {
+  return new Promise((resolve, reject) => {
+    const query = `DELETE FROM Playlistmusics WHERE playlistID = ${playlistID} AND musicID = ${musicID}`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results);
+    });
+  });
+};
+
+/**
  * End the connection
  */
 const endDatabase = () => {
@@ -209,4 +226,4 @@ const endDatabase = () => {
   });
 };
 
-module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics};
+module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics, deletePlaylistMusic};

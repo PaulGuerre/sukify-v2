@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const { downloadMP3, searchVideoByName, getMusicDuration } = require('./ytb-scraper');
-const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics } = require('./databaseManager');
+const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics, deletePlaylistMusic } = require('./databaseManager');
 
 require('dotenv').config({ path: 'credentials.env' });
 const thumbnailFolder = process.env.THUMBNAILS_FOLDER;
@@ -91,10 +91,10 @@ app.put('/updatePlaylist/:playlistID', (req, res) => {
     updatePlaylist(newPlaylist).then((results) => {
         if (results.affectedRows) {
             console.log('Playlist updated successfully');
-            res.status(200).send('Playlist updated successfully');
+            return res.status(200).send('Playlist updated successfully');
         }
         console.log('The playlist does not exist');
-        res.status(200).send('The playlist does not exist');
+        res.status(500).send('The playlist does not exist');
     }).catch((err) => {
         console.log('Error:' + err);
         res.status(500).send('Error while updating playlist');
@@ -110,10 +110,10 @@ app.delete('/deletePlaylist/:playlistID', (req, res) => {
     deletePlaylist(playlistID).then((results) => {
         if (results.affectedRows) {
             console.log('Playlist successfully deleted');
-            res.status(200).send('Playlist successfully deleted');
+            return res.status(200).send('Playlist successfully deleted');
         }
         console.log('The playlist does not exist');
-        res.send('The playlist does not exist');
+        res.status(500).send('The playlist does not exist');
     }).catch((err) => {
         console.log('Error :' + err);
         res.status(500).send('Error while deleting playlist');
@@ -129,7 +129,7 @@ app.delete('/deleteMusic/:musicID', (req, res) => {
     deleteMusic(musicID).then((results) => {
         if (results.affectedRows) {
             console.log('Music successfully deleted');
-            res.status(200).send('Music successfully deleted');
+            return res.status(200).send('Music successfully deleted');
         }
         console.log('The music does not exist');
         res.status(200).send('The music does not exist');
@@ -153,7 +153,7 @@ app.put('/updateMusic/:musicID', (req, res) => {
     updateMusic(music).then((results) => {
         if (results.affectedRows) {
             console.log('Music updated successfully');
-            res.status(200).send('Music updated successfully');
+            return res.status(200).send('Music updated successfully');
         }
         console.log('The music does not exist');
         res.status(500).send('The music does not exist');
@@ -166,13 +166,8 @@ app.put('/updateMusic/:musicID', (req, res) => {
 /**
  * Add a music to a playlist
  */
-app.post('/addPlaylistMusic', (req, res) => {
-    const playlistMusic = { playlistID: req.query.playlistID, musicID: req.query.musicID };
-
-    if (!playlistMusic.playlistID || !playlistMusic.musicID) {
-        console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
-    }
+app.post('/addPlaylist/:playlistID/music/:musicID', (req, res) => {
+    const playlistMusic = { playlistID: req.params.playlistID, musicID: req.params.musicID };
 
     insertPlaylistMusic(playlistMusic).then(() => {
         console.log('Music successfully added to playlist');
@@ -240,6 +235,25 @@ app.get('/getPlaylist/:playlistID', (req, res) => {
     }).catch((err) => {
         console.log('Error : ' + err);
         res.status(500).send('Error while retrieving the playlist musics');
+    });
+});
+
+/**
+ * Delete the music from the playlist
+ */
+app.delete('/deletePlaylist/:playlistID/music/:musicID', (req, res) => {
+    const playlistMusic = { playlistID: req.params.playlistID, musicID: req.params.musicID };
+
+    deletePlaylistMusic(playlistMusic).then((results) => {
+        if (results.affectedRows) {
+            console.log('Music successfully deleted from playlist');
+            return res.status(200).send('Music successfully deleted from playlist');
+        }
+        console.log('The music or the playlist does not exist');
+        res.status(200).send('The music or the playlist does not exist');
+    }).catch((err) => {
+        console.log('Error :' + err);
+        res.status(500).send('Error while deleting music from playlist');
     });
 });
 
