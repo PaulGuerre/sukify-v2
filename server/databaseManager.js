@@ -98,7 +98,7 @@ const deletePlaylist = (playlistID) => {
  */
 const deleteMusic = (musicID) => {
   return new Promise((resolve, reject) => {
-    const query = `DELETE FROM Music WHERE id = ${musicID}`;
+    const query = `DELETE FROM Music WHERE musicID = '${musicID}'`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {

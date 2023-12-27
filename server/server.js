@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+
+require('dotenv').config({ path: 'credentials.env' });
+const musicsFolder = process.env.MUSICS_FOLDER; 
 
 const { downloadMP3, searchVideoByName, getMusicDuration } = require('./ytb-scraper');
 const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics, deletePlaylistMusic } = require('./databaseManager');
-
-require('dotenv').config({ path: 'credentials.env' });
-const thumbnailFolder = process.env.THUMBNAILS_FOLDER;
 
 const app = express();
 const port = 7000;
@@ -128,12 +129,20 @@ app.delete('/deleteMusic/:musicID', (req, res) => {
 
     deleteMusic(musicID).then((results) => {
         if (results.affectedRows) {
-            console.log('Music successfully deleted');
-            return res.status(200).send('Music successfully deleted');
+            fs.unlink(musicsFolder + musicID + '.mp3', (err) => {
+                if (err) {
+                    console.log('Error :' + err);
+                    return res.status(500).send('Error while deleting music');
+                }
+                console.log('Music successfully deleted');
+                return res.status(200).send('Music successfully deleted');
+            });
+        } else {
+            console.log('The music does not exist');
+            res.status(200).send('The music does not exist');
         }
-        console.log('The music does not exist');
-        res.status(200).send('The music does not exist');
-    }).catch((err) => {
+    })
+    .catch((err) => {
         console.log('Error :' + err);
         res.status(500).send('Error while deleting music');
     });
