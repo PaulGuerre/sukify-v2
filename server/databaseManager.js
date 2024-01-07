@@ -184,7 +184,7 @@ const getPlaylists = ({ limit, offset }) => {
  */
 const getPlayistMusics = ({ playlistID, limit, offset }) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM Playlistmusics WHERE playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
+    const query = `SELECT music.id, music.musicID, music.musicTitle, music.musicDuration FROM Music INNER JOIN PlaylistMusics ON Music.id = PlaylistMusics.musicID WHERE PlaylistMusics.playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {

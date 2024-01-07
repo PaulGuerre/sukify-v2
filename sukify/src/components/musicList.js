@@ -1,18 +1,5 @@
-'use client'
-
-import { getMusics } from "@/utils/api";
-import { useState } from "react";
-
-export default function musicList() {
-    const [musics, setMusics] = useState([]);
-
-    useEffect(() => {
-        getMusics(10, 0).then((res) => {
-            setMusics(res.data);
-        });
-    }, []);
-
+export default function MusicList({ musics }) {
     return (
-        <p>{musics.length}</p>
+        <p>{musics[0].musicTitle}</p>
     );
 }
