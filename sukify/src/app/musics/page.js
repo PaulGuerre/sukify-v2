@@ -1,23 +1,26 @@
 'use client'
 
+import Header from '@/components/header/Header';
 import styles from './page.module.css';
 import MusicList from '@/components/MusicList';
 import { getMusics } from "@/utils/api";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { setMusics } from '@/store/musicsSlice';
 
 export default function Musics() {
-  const [musics, setMusics] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
       getMusics(10, 0).then((res) => {
-          setMusics(res.data);
+          dispatch(setMusics(res.data));
       });
   }, []);
 
   return (
-    <>
-      <p>This is the musics route</p>
-      { musics.length > 0 && <MusicList musics={musics} /> }
-    </>
+    <div className={styles.musics}>
+      <Header />
+      <MusicList />
+    </div>
   );
 }

@@ -2,22 +2,24 @@
 
 import styles from './page.module.css'
 import MusicList from '@/components/MusicList'
+import Header from '@/components/header/Header';
 import { getPlaylist } from "@/utils/api";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 export default function Playlist({ params }) {
-  const [musics, setMusics] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
       getPlaylist(params.id, 10, 0).then((res) => {
-          setMusics(res.data);
+          dispatch(setMusics(res.data));
       });
   }, []);
 
   return (
-    <>
-      <p>This is the playlist route : { params.id}</p>
-      { musics.length > 0 && <MusicList musics={musics} /> }
-    </>
+    <div className={styles.Playlist}>
+      <Header />
+      <MusicList />
+    </div>
   )
 }
