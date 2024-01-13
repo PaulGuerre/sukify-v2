@@ -35,3 +35,10 @@
 .title:not(:first-child) {
     margin: 32px 0 0 0;
 }
+
+/* Temporaire */
+@media (max-width: 768px) {
+    .header {
+        display: none;
+    }
+}
