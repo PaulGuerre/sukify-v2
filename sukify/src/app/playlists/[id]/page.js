@@ -6,6 +6,7 @@ import Header from '@/components/header/Header';
 import { getPlaylist } from "@/utils/api";
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { setMusics } from '@/store/musicsSlice';
 
 export default function Playlist({ params }) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function Playlist({ params }) {
   }, []);
 
   return (
-    <div className={styles.Playlist}>
+    <div className={styles.playlist}>
       <Header />
       <MusicList />
     </div>
