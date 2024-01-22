@@ -18,9 +18,11 @@ export default function Header() {
     const isMobile = window.innerWidth < 768 ? true : false;
 
     useEffect(() => {
-        const menu = document.querySelector(`.${styles.menu}`);        
-        menu.style.transform = (!isVisible && isMobile) ? 'translateX(-100%)' : 'translateX(0)';
-        menu.style.transition = 'transform 0.5s';
+        const header = document.querySelector(`.${styles.header}`);
+        const button = document.querySelector(`.${styles.button}`);
+
+        header.style.left = (!isVisible && isMobile) ? '-100%' : '0%';
+        button.style.left = (!isVisible && isMobile) ? '100%' : '16px';
     }, [isVisible]);
 
     useEffect(() => {
