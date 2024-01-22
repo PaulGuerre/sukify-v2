@@ -2,8 +2,6 @@
 
 import { useSelector } from "react-redux";
 import styles from "./MusicList.module.css";
-import play from '@/lib/icons/play.svg';
-import Image from "next/image";
 import MusicActions from "../musicActions/MusicActions";
 
 export default function MusicList() {
