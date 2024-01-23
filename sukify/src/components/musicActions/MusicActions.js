@@ -28,10 +28,12 @@ export default function MusicActions() {
     }    
 
     return (
-        <div className={styles.actions}>
-            <button className={styles.button} onMouseEnter={() => replaceIcon(0, playColor)} onMouseLeave={() => replaceIcon(0, playDark)}><Image src={iconIdHovered[0]} alt="play icon"/></button>
-            <button className={styles.button} onMouseEnter={() => replaceIcon(1, editColor)} onMouseLeave={() => replaceIcon(1, edit)}><Image src={iconIdHovered[1]} alt="edit icon" /></button>
-            <button className={styles.button} onMouseEnter={() => replaceIcon(2, trashColor)} onMouseLeave={() => replaceIcon(2, trash)}><Image src={iconIdHovered[2]} alt="delete icon" /></button>
-        </div>
+        <button className={styles.button} onMouseEnter={() => replaceIcon(0, playColor)} onMouseLeave={() => replaceIcon(0, playDark)}><Image src={iconIdHovered[0]} alt="play icon"/></button>
+
+        // <div className={styles.actions}>
+        //     <button className={styles.button} onMouseEnter={() => replaceIcon(0, playColor)} onMouseLeave={() => replaceIcon(0, playDark)}><Image src={iconIdHovered[0]} alt="play icon"/></button>
+        //     <button className={styles.button} onMouseEnter={() => replaceIcon(1, editColor)} onMouseLeave={() => replaceIcon(1, edit)}><Image src={iconIdHovered[1]} alt="edit icon" /></button>
+        //     <button className={styles.button} onMouseEnter={() => replaceIcon(2, trashColor)} onMouseLeave={() => replaceIcon(2, trash)}><Image src={iconIdHovered[2]} alt="delete icon" /></button>
+        // </div>
     );
 }

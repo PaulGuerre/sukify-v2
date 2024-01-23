@@ -9,6 +9,7 @@
 .button {
     border: none;
     background-color: transparent;
+    width: 25px;
 }
 
 .button > img {
