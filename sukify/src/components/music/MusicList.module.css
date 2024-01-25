@@ -59,16 +59,6 @@
     overflow: hidden;
 }
 
-.dots {
-    border: none;
-    background-color: transparent;
-}
-
-.dots > img {
-    width: 16px;
-    height: 16px;
-}
-
 .musicDuration {
     font-size: 16px;
     color: #424242;
