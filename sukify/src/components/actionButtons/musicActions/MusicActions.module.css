@@ -1,0 +1,39 @@
+.test {
+    position: relative;
+    display: inline-block;
+}
+
+.button {
+    border: none;
+    background-color: transparent;
+    width: 25px;
+    cursor: pointer;
+}
+
+.button > img {
+    width: 16px;
+    height: 16px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.menuAction {
+    border: none;
+    background-color: transparent;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.menuAction:hover {
+    color: #ABABAB;
+}
