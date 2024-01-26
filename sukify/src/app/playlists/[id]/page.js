@@ -24,7 +24,7 @@ export default function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <Header />
-        <MusicList title={playlist?.name} />
+      <MusicList title={playlist?.name} />
     </div>
   )
 }

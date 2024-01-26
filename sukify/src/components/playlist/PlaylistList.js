@@ -11,7 +11,8 @@ export default function PlaylistList() {
 
   return (
     <div className={styles.playlists}>
-        {playlists.map((playlist) => (
+        {
+          playlists.length ? playlists.map((playlist) => (
             <Link key={playlist.id} href={`/playlists/${playlist.id}`} className={`${styles.playlist} ${styles[`cover-${Math.floor(Math.random() * 4) + 1}`]}`}>
                 <div className={styles.playlistName}>{playlist.name}</div>
                 <div className={styles.playlistLength}>{playlist.MusicCount} musics</div>
@@ -19,7 +20,8 @@ export default function PlaylistList() {
                     <Image src={play} alt="play icon" />
                 </div>
             </Link>
-        ))}
+          )) : <p className={styles.empty}>No playlists :/</p>
+        }
     </div>
   );
 }

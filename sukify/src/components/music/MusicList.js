@@ -22,19 +22,21 @@ export default function MusicList({ title = 'Musics' }) {
                 <p className={styles.title}>{ title }</p>
                 <p className={styles.stat}>{ musics.length} { musics.length > 1 ? 'musics' : 'music' }</p>
             </div>
-            {musics.map((music) => (
-                <div key={music.id} className={styles.music} onMouseEnter={() => setIdHovered(music.id)} onMouseLeave={() => setIdHovered(null)}>
-                    <div className={styles.main}>
-                        { idHovered === music.id ? <PlayButton /> : <div className={styles.musicKey}>{music.id}</div> }
-                        <img src={`https://img.youtube.com/vi/${music.musicID}/maxresdefault.jpg`} alt="music thumbnail" />
-                        <div className={styles.musicTitle}>{music.musicTitle}</div>
+            {
+                musics.length ? musics.map((music) => (
+                    <div key={music.id} className={styles.music} onMouseEnter={() => setIdHovered(music.id)} onMouseLeave={() => setIdHovered(null)}>
+                        <div className={styles.main}>
+                            { idHovered === music.id ? <PlayButton /> : <div className={styles.musicKey}>{music.id}</div> }
+                            <img src={`https://img.youtube.com/vi/${music.musicID}/maxresdefault.jpg`} alt="music thumbnail" />
+                            <div className={styles.musicTitle}>{music.musicTitle}</div>
+                        </div>
+                        <div className={styles.second}>
+                            <MusicActions />
+                            <div className={styles.musicDuration}>{formatTime(music.musicDuration)}</div>
+                        </div>
                     </div>
-                    <div className={styles.second}>
-                        <MusicActions />
-                        <div className={styles.musicDuration}>{formatTime(music.musicDuration)}</div>
-                    </div>
-                </div>
-            ))}
+                )) : <p className={styles.empty}>No musics :/</p>
+            }
         </div>
     );
 }
