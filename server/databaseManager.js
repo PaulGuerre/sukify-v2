@@ -184,7 +184,7 @@ const getPlaylists = ({ limit, offset }) => {
  */
 const getPlaylist = (playlistID) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT playlist.name, COUNT(playlistMusics.musicID) as MusicCount FROM Playlist INNER JOIN PlaylistMusics on Playlist.id = PlaylistMusics.playlistID WHERE Playlist.id = ${playlistID}`;
+    const query = `SELECT * FROM Playlist WHERE id = ${playlistID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {

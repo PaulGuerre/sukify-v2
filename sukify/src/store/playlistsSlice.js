@@ -3,8 +3,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    playlists: [],
-    currentPlaylist: {}
+    playlists: []
 }
 
 export const playlistsSlice = createSlice({
@@ -13,12 +12,9 @@ export const playlistsSlice = createSlice({
     reducers: {
         setPlaylists: (state, action) => {
             state.playlists = action.payload;
-        },
-        setCurrentPlaylist: (state, action) => {
-            state.currentPlaylist = action.payload;
         }
     },
 });
 
-export const { setPlaylists, setCurrentPlaylist } = playlistsSlice.actions;
+export const { setPlaylists } = playlistsSlice.actions;
 export default playlistsSlice.reducer;
