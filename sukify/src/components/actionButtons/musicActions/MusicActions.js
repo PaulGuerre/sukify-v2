@@ -9,7 +9,7 @@ export default function MusicActions() {
     const [ isVisible, setIsVisible ] = useState(false);
 
     return (
-        <div className={styles.test}>
+        <div className={styles.test} onMouseLeave={() => setIsVisible(!isVisible)}>
             <button className={styles.button} onClick={() => setIsVisible(!isVisible)}><Image src={dots} alt="three dots icon" /></button>
             {
                 isVisible &&

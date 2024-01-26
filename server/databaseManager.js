@@ -180,9 +180,26 @@ const getPlaylists = ({ limit, offset }) => {
 };
 
 /**
+ * Get the playlist
+ */
+const getPlaylist = (playlistID) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT playlist.name, COUNT(playlistMusics.musicID) as MusicCount FROM Playlist INNER JOIN PlaylistMusics on Playlist.id = PlaylistMusics.playlistID WHERE Playlist.id = ${playlistID}`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results[0]);
+    });
+  });
+};
+
+/**
  * Get the playlist musics
  */
-const getPlayistMusics = ({ playlistID, limit, offset }) => {
+const getPlaylistMusics = ({ playlistID, limit, offset }) => {
   return new Promise((resolve, reject) => {
     const query = `SELECT music.id, music.musicID, music.musicTitle, music.musicDuration FROM Music INNER JOIN PlaylistMusics ON Music.id = PlaylistMusics.musicID WHERE PlaylistMusics.playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
 
@@ -226,4 +243,4 @@ const endDatabase = () => {
   });
 };
 
-module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics, deletePlaylistMusic};
+module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic};

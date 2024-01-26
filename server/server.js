@@ -6,7 +6,7 @@ require('dotenv').config({ path: 'credentials.env' });
 const musicsFolder = process.env.MUSICS_FOLDER; 
 
 const { downloadMP3, searchVideoByName, getMusicDuration } = require('./ytb-scraper');
-const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlayistMusics, deletePlaylistMusic } = require('./databaseManager');
+const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic } = require('./databaseManager');
 
 const app = express();
 const port = 7000;
@@ -228,9 +228,24 @@ app.get('/getPlaylists', (req, res) => {
 });
 
 /**
- * Get the playlist musics depending on the offset and the limit
+ * Get the playlist
  */
 app.get('/getPlaylist/:playlistID', (req, res) => {
+    const playlistID = req.params.playlistID;
+
+    getPlaylist(playlistID).then((results) => {
+        console.log('Playlist retrieved');
+        res.status(200).send(results);
+    }).catch((err) => {
+        console.log('Error : ' + err);
+        res.status(500).send('Error while retrieving the playlist');
+    });
+});
+
+/**
+ * Get the playlist musics depending on the offset and the limit
+ */
+app.get('/getPlaylistMusics/:playlistID', (req, res) => {
     const data = { playlistID: req.params.playlistID, limit: req.query.limit, offset: req.query.offset };
 
     if (!data.limit || !data.offset) {
@@ -238,7 +253,7 @@ app.get('/getPlaylist/:playlistID', (req, res) => {
         return res.status(500).send('Missing parameters');
     }
 
-    getPlayistMusics(data).then((results) => {
+    getPlaylistMusics(data).then((results) => {
         console.log('Playlist musics retrieved');
         res.status(200).send(results);
     }).catch((err) => {

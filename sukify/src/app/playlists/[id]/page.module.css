@@ -4,3 +4,30 @@
     display: flex;
     flex-direction: row;
 }
+
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infos {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.stat {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1rem;
+}
