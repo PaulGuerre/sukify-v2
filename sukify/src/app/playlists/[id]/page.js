@@ -10,12 +10,10 @@ import { setMusics } from '@/store/musicsSlice';
 
 export default function Playlist({ params }) {
   const dispatch = useDispatch();
-  const [ playlist, setPlaylist ] = useState(null);
+  const playlists = useSelector((state) => state.playlists.playlists);
+  const playlistName = playlists.find((playlist) => playlist.id === +params.id)?.name;
 
   useEffect(() => {
-    getPlaylist(params.id).then((res) => {
-      setPlaylist(res.data);
-    });
     getPlaylistMusics(params.id, 10, 0).then((res) => {
       dispatch(setMusics(res.data));
     });
@@ -24,7 +22,7 @@ export default function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <Header />
-      <MusicList title={playlist?.name} isPlaylist={true} />
+      <MusicList title={playlistName} isPlaylist={true} />
     </div>
   )
 }
