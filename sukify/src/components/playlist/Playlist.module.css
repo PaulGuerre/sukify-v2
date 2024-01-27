@@ -1,11 +1,3 @@
-.playlists {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: start;
-}
-
 .playlist {
     display: flex;
     flex-direction: column;
@@ -59,16 +51,6 @@
     transition: opacity 0.2s ease-in-out;
 }
 
-.empty {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 16px;
-    padding: 16px;
-}
-
 .cover-1 {
     background: linear-gradient(45deg, #00E676, #00B0FF);
 }
@@ -86,12 +68,6 @@
 }   
 
 @media (max-width: 768px) {
-    .playlists {
-        width: 100%;
-        justify-content: center;
-        margin-top: 64px;
-    }
-
     .playlist {
         width: 100px;
         height: 100px;

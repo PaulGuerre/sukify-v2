@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './page.module.css'
-import MusicList from '@/components/music/MusicList'
+import MusicList from '@/components/musicList/MusicList'
 import Header from '@/components/header/Header';
 import { getPlaylistMusics, getPlaylist } from "@/utils/api";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ export default function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <Header />
-      <MusicList title={playlist?.name} />
+      <MusicList title={playlist?.name} isPlaylist={true} />
     </div>
   )
 }

@@ -1,0 +1,23 @@
+.musics {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    overflow-y: scroll;
+}
+
+.empty {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+    padding: 16px;
+}
+
+@media (max-width: 768px) {
+    .musics {
+        margin-top: 32px;
+    }
+}

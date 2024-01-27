@@ -2,7 +2,7 @@
 
 import Header from '@/components/header/Header';
 import styles from './page.module.css';
-import MusicList from '@/components/music/MusicList';
+import MusicList from '@/components/musicList/MusicList';
 import { getMusics } from "@/utils/api";
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';

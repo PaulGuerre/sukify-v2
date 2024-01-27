@@ -1,0 +1,25 @@
+.playlists {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.empty {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+    padding: 16px;
+}
+
+@media (max-width: 768px) {
+    .playlists {
+        width: 100%;
+        justify-content: center;
+        margin-top: 64px;
+    }
+}
