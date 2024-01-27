@@ -13,6 +13,8 @@
     align-items: start;
     background: linear-gradient(45deg, #00E676, #00B0FF);
     gap: 16px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .button {
