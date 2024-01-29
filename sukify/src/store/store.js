@@ -1,5 +1,3 @@
-'use client'
-
 import { configureStore } from "@reduxjs/toolkit";
 import musicsSlice from "./musicsSlice";
 import playlistsSlice from "./playlistsSlice";

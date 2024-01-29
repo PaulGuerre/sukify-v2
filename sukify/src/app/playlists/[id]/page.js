@@ -22,7 +22,7 @@ export default function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <Header />
-      <MusicList title={playlistName} isPlaylist={true} />
+      <MusicList title={playlistName} playlistID={params.id} />
     </div>
   )
 }

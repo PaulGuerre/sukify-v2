@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image';
 import styles from './PlayButton.module.css';
 import playGrey from '@/lib/icons/play_grey.svg';
