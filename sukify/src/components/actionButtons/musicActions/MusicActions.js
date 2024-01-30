@@ -3,12 +3,13 @@ import styles from './MusicActions.module.css';
 import dots from '@/lib/icons/dots.svg';
 import { useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
-import { deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, updateMusic } from '@/utils/api';
+import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, updateMusic } from '@/utils/api';
 import { setMusics } from '@/store/musicsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MusicActions({ musicID }) {
     const dispatch = useDispatch();
+    const playlists = useSelector((state) => state.playlists.playlists);
     const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
     const musicVideoID = useSelector((state) => state.musics.musics.find((music) => music.id === musicID).musicID);
 
@@ -74,6 +75,26 @@ export default function MusicActions({ musicID }) {
         setShowAlert(true);
     }
 
+    const addMusic = () => {
+        const data = {
+            firstAction: () => {
+                addMusicToPlaylist(document.getElementById('playlistChosen').value, musicID);
+                setShowAlert(false);
+            },
+            secondAction: () => setShowAlert(false),
+            form: (
+                <div>
+                    <p>To which playlist do you want to add this music ?</p>
+                    <select id='playlistChosen' className={styles.addToPlaylistAlert}>
+                        { playlists.map((playlist) => <option key={playlist.id} value={playlist.id}>{playlist.name}</option>) }
+                    </select>
+                </div>
+            )
+        };
+        setAlertData(data);
+        setShowAlert(true);
+    }
+
     return (
         <div className={styles.main} onMouseLeave={() => setIsVisible(!isVisible)}>
             { showAlert && <CustomAlert data={alertData} /> }
@@ -81,7 +102,7 @@ export default function MusicActions({ musicID }) {
             {
                 isVisible &&
                 <div className={styles.menu}>
-                    <button className={styles.menuAction}>Add</button>
+                    <button className={styles.menuAction} onClick={addMusic}>Add</button>
                     <button className={styles.menuAction} onClick={renameMusic}>Edit</button>
                     <button className={styles.menuAction} onClick={playlistID ? removeMusicFromPlaylist : removeMusic}>Delete</button>
                 </div>

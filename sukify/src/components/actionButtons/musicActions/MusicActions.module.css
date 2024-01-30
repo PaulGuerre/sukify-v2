@@ -51,3 +51,20 @@
     border: 1px solid #E0E0E0;
     font-size: 16px;
 }
+
+.addToPlaylistAlert {
+    width: 100%;
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.addToPlaylistAlert > option {
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    font-size: 16px;
+    cursor: pointer;
+}

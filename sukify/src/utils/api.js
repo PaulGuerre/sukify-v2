@@ -31,3 +31,7 @@ export const deleteMusic = (musicID) => {
 export const deleteMusicFromPlaylist = (playlistID, musicID) => {
     return axios.delete(`http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`);
 }
+
+export const addMusicToPlaylist = (playlistID, musicID) => {
+    return axios.post(`http://localhost:7000/addPlaylist/${playlistID}/music/${musicID}`);
+}
