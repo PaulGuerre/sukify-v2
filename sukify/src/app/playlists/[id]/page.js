@@ -7,6 +7,7 @@ import { getPlaylistMusics, getPlaylist } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setMusics } from '@/store/musicsSlice';
+import { setCurrentPlaylist } from '@/store/playlistsSlice';
 
 export default function Playlist({ params }) {
   const dispatch = useDispatch();
@@ -17,12 +18,13 @@ export default function Playlist({ params }) {
     getPlaylistMusics(params.id, 10, 0).then((res) => {
       dispatch(setMusics(res.data));
     });
+    dispatch(setCurrentPlaylist({ id: params.id, name: playlistName }));
   }, []);
 
   return (
     <div className={styles.playlist}>
       <Header />
-      <MusicList title={playlistName} playlistID={params.id} />
+      <MusicList title={playlistName} isPlaylist={true} />
     </div>
   )
 }

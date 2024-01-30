@@ -19,3 +19,15 @@ export const updatePlaylist = (playlistID, newName) => {
 export const deletePlaylist = (playlistID) => {
     return axios.delete(`http://localhost:7000/deletePlaylist/${playlistID}`);
 }
+
+export const updateMusic = (musicID, newName) => {
+    return axios.put(`http://localhost:7000/updateMusic/${musicID}?newName=${newName}`);
+}
+
+export const deleteMusic = (musicID) => {
+    return axios.delete(`http://localhost:7000/deleteMusic/${musicID}`);
+}
+
+export const deleteMusicFromPlaylist = (playlistID, musicID) => {
+    return axios.delete(`http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`);
+}

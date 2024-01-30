@@ -8,12 +8,13 @@ import { useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { getPlaylists, updatePlaylist, deletePlaylist } from '@/utils/api';
 import { setPlaylists } from '@/store/playlistsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
-export default function PlaylistActions({ playlistID }) {
-    const dispatch = useDispatch();
+export default function PlaylistActions() {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
 
     const [ isEditHovered, setIsEditHovered ] = useState(false);
     const [ isTrashHovered, setIsTrashHovered ] = useState(false);
@@ -64,9 +65,7 @@ export default function PlaylistActions({ playlistID }) {
 
     return (
         <div className={styles.main}>
-            {
-                showAlert && <CustomAlert data={alertData} />
-            }
+            { showAlert && <CustomAlert data={alertData} showAlert={showAlert} /> }
             <Image src={isEditHovered ? editGrey : edit} alt='Edit icon' onClick={renamePlaylist} onMouseEnter={() => setIsEditHovered(true)} onMouseLeave={() => setIsEditHovered(false)} />
             <Image src={isTrashHovered ? trashColor : trash} alt='Trash icon' onClick={removePlaylist} onMouseEnter={() => setIsTrashHovered(true)} onMouseLeave={() => setIsTrashHovered(false)} />
         </div> 

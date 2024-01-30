@@ -19,7 +19,7 @@ export default function Music({ music }) {
                 <div className={styles.musicTitle}>{music.musicTitle}</div>
             </div>
             <div className={styles.second}>
-                <MusicActions />
+                <MusicActions musicID={music.id} />
                 <div className={styles.musicDuration}>{formatTime(music.musicDuration)}</div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-.test {
+.main {
     position: relative;
     display: inline-block;
 }
@@ -36,4 +36,18 @@
 
 .menuAction:hover {
     color: #ABABAB;
+}
+
+.renameAlert {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.renameAlert > input {
+    width: 100%;
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    font-size: 16px;
 }

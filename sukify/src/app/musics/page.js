@@ -7,6 +7,7 @@ import { getMusics } from "@/utils/api";
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { setMusics } from '@/store/musicsSlice';
+import { setCurrentPlaylist } from '@/store/playlistsSlice';
 
 export default function Musics() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function Musics() {
       getMusics(10, 0).then((res) => {
           dispatch(setMusics(res.data));
       });
+      dispatch(setCurrentPlaylist({ id: null, name: 'Musics' }));
   }, []);
 
   return (
