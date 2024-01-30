@@ -15,7 +15,12 @@ export default function Header() {
     const playlists = useSelector((state) => state.playlists.playlists);
 
     const [ isVisible, setIsVisible ] = useState(false);
-    const isMobile = window.innerWidth < 768 ? true : false;
+    const [ isMobile, setIsMobile ] = useState(false);
+
+    useEffect(() => {
+        const isMobile = window.innerWidth < 768;
+        setIsMobile(isMobile);
+    }, []);
 
     useEffect(() => {
         const header = document.querySelector(`.${styles.header}`);

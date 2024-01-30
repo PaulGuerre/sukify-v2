@@ -5,8 +5,6 @@
     align-items: center;
     margin: 16px;
     gap: 16px;
-    overflow: hidden;
-    white-space: nowrap;
 }
 
 .title {
@@ -14,10 +12,9 @@
     font-weight: bold;
     color: #424242;
     margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .second {
