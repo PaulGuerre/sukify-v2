@@ -13,14 +13,8 @@ import Image from 'next/image';
 export default function Header() {
     const dispatch = useDispatch();
     const playlists = useSelector((state) => state.playlists.playlists);
-
     const [ isVisible, setIsVisible ] = useState(false);
-    const [ isMobile, setIsMobile ] = useState(false);
-
-    useEffect(() => {
-        const isMobile = window.innerWidth < 768;
-        setIsMobile(isMobile);
-    }, []);
+    const isMobile = window.innerWidth < 768 ? true : false;
 
     useEffect(() => {
         const header = document.querySelector(`.${styles.header}`);
