@@ -16,6 +16,11 @@
     padding: 16px;
 }
 
+.empty > img {
+    width: 128px;
+    height: 128px;
+}
+
 @media (max-width: 768px) {
     .playlists {
         width: 100%;

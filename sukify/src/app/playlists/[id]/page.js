@@ -3,8 +3,8 @@
 import styles from './page.module.css'
 import MusicList from '@/components/musicList/MusicList'
 import Header from '@/components/header/Header';
-import { getPlaylistMusics, getPlaylist } from "@/utils/api";
-import { useEffect, useState } from "react";
+import { getPlaylistMusics } from "@/utils/api";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setMusics } from '@/store/musicsSlice';
 import { setCurrentPlaylist } from '@/store/playlistsSlice';
