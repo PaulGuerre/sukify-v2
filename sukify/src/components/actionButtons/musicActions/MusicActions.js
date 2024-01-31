@@ -28,7 +28,7 @@ export default function MusicActions({ musicID }) {
             secondAction: () => setShowAlert(false),
             form: (
                 <div className={styles.renameAlert}>
-                    <p>What is the new name of the music ?</p>
+                    <p className={styles.textAlert}>What is the new name of the music ?</p>
                     <input type="text" id='musicNewName' />
                 </div>
             )
@@ -49,7 +49,7 @@ export default function MusicActions({ musicID }) {
             secondAction: () => setShowAlert(false),
             form: (
                 <div>
-                    <p>Are you sure you want to delete this music from the playlist ?</p>
+                    <p className={styles.textAlert}>Are you sure you want to delete this music from the playlist ?</p>
                 </div>
             )
         };
@@ -69,7 +69,7 @@ export default function MusicActions({ musicID }) {
             secondAction: () => setShowAlert(false),
             form: (
                 <div>
-                    <p>Are you sure you want to delete this music ?</p>
+                    <p className={styles.textAlert}>Are you sure you want to delete this music ?</p>
                 </div>
             )
         };
@@ -87,7 +87,7 @@ export default function MusicActions({ musicID }) {
             secondAction: () => setShowAlert(false),
             form: (
                 <div>
-                    <p>To which playlist do you want to add this music ?</p>
+                    <p className={styles.textAlert}>To which playlist do you want to add this music ?</p>
                     <select id='playlistChosen' className={styles.addToPlaylistAlert}>
                         { playlists.map((playlist) => <option key={playlist.id} value={playlist.id}>{playlist.name}</option>) }
                     </select>

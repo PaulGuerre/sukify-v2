@@ -32,7 +32,7 @@ export default function PlaylistActions() {
             secondAction: () => setShowAlert(false),
             form: (
                 <div className={styles.renameAlert}>
-                    <p>What is the new name of the playlist ?</p>
+                    <p className={styles.textAlert}>What is the new name of the playlist ?</p>
                     <input type="text" id='playlistNewName' />
                 </div>
             )
@@ -55,7 +55,7 @@ export default function PlaylistActions() {
             secondAction: () => setShowAlert(false),
             form: (
                 <div>
-                    <p>Are you sure you want to delete this playlist ?</p>
+                    <p className={styles.textAlert}>Are you sure you want to delete this playlist ?</p>
                 </div>
             )
         };

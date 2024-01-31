@@ -41,30 +41,31 @@
 .renameAlert {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    justify-content: center;
+    align-items: center;
 }
 
 .renameAlert > input {
-    width: 100%;
-    padding: 8px 0;
+    width: 70%;
+    padding: 8px;
     border-radius: 8px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #00B0FF;
     font-size: 16px;
+    margin: 8px;
 }
 
 .addToPlaylistAlert {
-    width: 100%;
-    padding: 8px 0;
+    width: 70%;
+    padding: 8px;
     border-radius: 8px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #00B0FF;
     font-size: 16px;
     cursor: pointer;
+    margin: 8px;
+    background-color: transparent;
 }
 
-.addToPlaylistAlert > option {
-    padding: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #E0E0E0;
+.textAlert {
     font-size: 16px;
-    cursor: pointer;
+    font-weight: bold;
 }
