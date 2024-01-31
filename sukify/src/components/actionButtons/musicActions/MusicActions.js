@@ -35,6 +35,7 @@ export default function MusicActions({ musicID }) {
         };
         setAlertData(data);
         setShowAlert(true);
+        setIsVisible(false);
     }
 
     const removeMusicFromPlaylist = () => {
@@ -54,6 +55,7 @@ export default function MusicActions({ musicID }) {
         };
         setAlertData(data);
         setShowAlert(true);
+        setIsVisible(false);
     }
 
     const removeMusic = () => {        
@@ -73,6 +75,7 @@ export default function MusicActions({ musicID }) {
         };
         setAlertData(data);
         setShowAlert(true);
+        setIsVisible(false);
     }
 
     const addMusic = () => {
@@ -93,6 +96,7 @@ export default function MusicActions({ musicID }) {
         };
         setAlertData(data);
         setShowAlert(true);
+        setIsVisible(false);
     }
 
     return (
