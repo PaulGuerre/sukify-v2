@@ -7,6 +7,7 @@ import Loader from "../loader/Loader";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import sad from '@/lib/icons/sad.svg';
+import AddPlaylist from "../actionButtons/addPlaylist/AddPlaylist";
 
 export default function PlaylistList() {
   const playlists = useSelector((state) => state.playlists.playlists);
@@ -18,7 +19,7 @@ export default function PlaylistList() {
 
   return (
     isLoading ? <Loader /> : <div className={styles.playlists}>
-      { playlists.length ? playlists.map((playlist) => <Playlist key={playlist.id} playlist={playlist} /> ) : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> }
+      { playlists.length ? (<>{ playlists.map((playlist) => <Playlist key={playlist.id} playlist={playlist} /> )} <AddPlaylist /></>) : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> }
     </div>
   );
 }

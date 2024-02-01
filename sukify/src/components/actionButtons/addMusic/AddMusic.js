@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './AddMusic.module.css';
-import plus from '@/lib/icons/plus.svg';
+import plusDark from '@/lib/icons/plus_dark.svg';
 import plusGrey from '@/lib/icons/plus_grey.svg';
 import { useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
@@ -41,7 +41,7 @@ export default function AddMusic() {
     return (
         isLoading ? <Loader /> : <div className={styles.main}>
             { showAlert && <CustomAlert data={alertData} showAlert={showAlert} /> }
-            <Image src={isHovered ? plusGrey : plus} alt='Plus icon' onClick={addMusic} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} />
+            <Image src={isHovered ? plusGrey : plusDark} alt='Plus icon' onClick={addMusic} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} />
         </div>
     )
 }
