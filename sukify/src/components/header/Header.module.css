@@ -1,7 +1,7 @@
 .header {
     width: 250px;
     height: 100%;
-    z-index: 2;
+    z-index: 3;
     overflow-y: clip;
 }
 

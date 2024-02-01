@@ -1,0 +1,31 @@
+.main {
+    display: flex;
+    align-items: center;
+}
+
+.main > img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.addAlert {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addAlert > input {
+    width: 70%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #00B0FF;
+    font-size: 16px;
+    margin: 8px;
+}
+
+.textAlert {
+    font-size: 16px;
+    font-weight: bold;
+}
