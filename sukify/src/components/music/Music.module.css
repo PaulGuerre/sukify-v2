@@ -57,8 +57,17 @@
 }
 
 @media (max-width: 768px) {
+    .main {
+        width: 75%;
+        justify-content: flex-start;
+    }
+
     .main > img {
         display: none;
+    }
+
+    .second {
+        width: 25%;
     }
 
     .musicKey {
