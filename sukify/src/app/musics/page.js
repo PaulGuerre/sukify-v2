@@ -1,6 +1,5 @@
 'use client'
 
-import Header from '@/components/header/Header';
 import styles from './page.module.css';
 import MusicList from '@/components/musicList/MusicList';
 import { getMusics } from "@/utils/api";
@@ -22,7 +21,6 @@ export default function Musics() {
 
   return (
     <div className={styles.musics}>
-      <Header />
       <MusicList />
     </div>
   );

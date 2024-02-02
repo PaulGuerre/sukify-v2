@@ -2,7 +2,6 @@
 
 import styles from './page.module.css'
 import MusicList from '@/components/musicList/MusicList'
-import Header from '@/components/header/Header';
 import { getPlaylistMusics } from "@/utils/api";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +23,6 @@ export default function Playlist({ params }) {
 
   return (
     <div className={styles.playlist}>
-      <Header />
       <MusicList title={playlistName} isPlaylist={true} />
     </div>
   )
