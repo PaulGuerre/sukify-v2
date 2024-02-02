@@ -12,9 +12,13 @@ import Image from 'next/image';
 
 export default function Header() {
     const dispatch = useDispatch();
-    const playlists = useSelector((state) => state.playlists.playlists.slice(0, 5));
+    const playlists = useSelector((state) => state.playlists.playlists);
     const [ isVisible, setIsVisible ] = useState(false);
-    const isMobile = window.innerWidth < 768 ? true : false;
+
+    const isMobile = () => {
+        if (typeof window === 'undefined') return false;
+        return window.innerWidth < 768 ? true : false;
+    };
 
     useEffect(() => {
         const header = document.querySelector(`.${styles.header}`);
@@ -41,7 +45,7 @@ export default function Header() {
                 <Link href="/playlists" className={styles.link}>Playlists</Link>
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
-                {playlists.map((playlist) => (
+                {playlists.slice(0, 5).map((playlist) => (
                     <Link href={`/playlists/${playlist.id}`} className={styles.link} key={playlist.id}>{playlist.name}</Link>
                 ))}
             </div>

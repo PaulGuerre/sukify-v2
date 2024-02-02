@@ -210,7 +210,7 @@ app.get('/getMusics', (req, res) => {
 /**
  * Get playlists depending on the offset and the limit
  */
-app.get('/getPlaylists', (res) => {
+app.get('/getPlaylists', (req, res) => {
     getPlaylists().then((results) => {
         console.log('Playlists retrieved');
         res.status(200).send(results);
