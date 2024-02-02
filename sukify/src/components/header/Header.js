@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 export default function Header() {
     const dispatch = useDispatch();
-    const playlists = useSelector((state) => state.playlists.playlists);
+    const playlists = useSelector((state) => state.playlists.playlists.slice(0, 5));
     const [ isVisible, setIsVisible ] = useState(false);
     const isMobile = window.innerWidth < 768 ? true : false;
 
@@ -25,7 +25,7 @@ export default function Header() {
     }, [isVisible]);
 
     useEffect(() => {
-        getPlaylists(10, 0).then((res) => {
+        getPlaylists().then((res) => {
             dispatch(setPlaylists(res.data));
         });
     }, []);

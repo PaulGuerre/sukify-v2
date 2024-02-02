@@ -4,7 +4,7 @@ import dots from '@/lib/icons/dots.svg';
 import { useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, updateMusic } from '@/utils/api';
-import { setMusics } from '@/store/musicsSlice';
+import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MusicActions({ musicID }) {
@@ -12,16 +12,22 @@ export default function MusicActions({ musicID }) {
     const playlists = useSelector((state) => state.playlists.playlists);
     const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
     const musicVideoID = useSelector((state) => state.musics.musics.find((music) => music.id === musicID).musicID);
+    const currentIndex = useSelector((state) => state.musics.currentIndex);
 
     const [ isVisible, setIsVisible ] = useState(false);
     const [ showAlert, setShowAlert ] = useState(false);
     const [ alertData, setAlertData ] = useState({});
 
+    const updateMusics = (res) => {
+        dispatch(setMusics(res.data));
+        dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
+    }
+
     const renameMusic = () => {
         const data = {
             firstAction: () => {
                 updateMusic(musicID, document.getElementById('musicNewName').value).then(() => {
-                    playlistID ? getPlaylistMusics(playlistID, 10, 0).then((res) => { dispatch(setMusics(res.data)); }) : getMusics(10, 0).then((res) => { dispatch(setMusics(res.data)); });
+                    playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
             },
@@ -42,7 +48,7 @@ export default function MusicActions({ musicID }) {
         const data = {
             firstAction: () => {
                 deleteMusicFromPlaylist(playlistID, musicID).then(() => {
-                    getPlaylistMusics(playlistID, 10, 0).then((res) => { dispatch(setMusics(res.data)); });
+                    getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
             },
@@ -62,7 +68,7 @@ export default function MusicActions({ musicID }) {
         const data = {
             firstAction: () => {
                 deleteMusic(musicVideoID).then(() => {
-                    getMusics(10, 0).then((res) => { dispatch(setMusics(res.data)); });
+                    getMusics(1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
             },

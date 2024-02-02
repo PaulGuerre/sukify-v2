@@ -5,8 +5,8 @@ import plusGrey from '@/lib/icons/plus_grey.svg';
 import { useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { downloadMusic, getMusics } from '@/utils/api';
-import { useDispatch } from 'react-redux';
-import { setMusics } from '@/store/musicsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import Loader from '@/components/loader/Loader';
 
 export default function AddMusic() {
@@ -15,6 +15,7 @@ export default function AddMusic() {
     const [ showAlert, setShowAlert ] = useState(false);
     const [ alertData, setAlertData ] = useState({});
     const [ isLoading, setIsLoading ] = useState(false);
+    const currentIndex = useSelector((state) => state.musics.currentIndex);
 
     const addMusic = () => {
         const data = {
@@ -22,7 +23,10 @@ export default function AddMusic() {
                 setIsLoading(true);
                 downloadMusic(document.getElementById('musicName').value).then(() => {
                     setIsLoading(false);
-                    getMusics(10, 0).then((res) => { dispatch(setMusics(res.data)); });
+                    getMusics(1000, 0).then((res) => { 
+                        dispatch(setMusics(res.data)); 
+                        dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
+                    });
                 });
                 setShowAlert(false);
             },

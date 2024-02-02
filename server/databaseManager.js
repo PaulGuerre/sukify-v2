@@ -165,9 +165,9 @@ const getMusics = ({ limit, offset }) => {
 /**
  * Get playlists depending on the offset and the limit
  */
-const getPlaylists = ({ limit, offset }) => {
+const getPlaylists = () => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT COUNT(PlaylistMusics.musicID) AS MusicCount, Playlist.* FROM Playlist LEFT JOIN PlaylistMusics ON Playlist.id = PlaylistMusics.playlistID GROUP BY Playlist.id LIMIT ${limit} OFFSET ${offset}`;
+    const query = `SELECT COUNT(PlaylistMusics.musicID) AS MusicCount, Playlist.* FROM Playlist LEFT JOIN PlaylistMusics ON Playlist.id = PlaylistMusics.playlistID GROUP BY Playlist.id`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {

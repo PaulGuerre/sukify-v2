@@ -25,7 +25,7 @@ export default function PlaylistActions() {
         const data = {
             firstAction: () => {
                 updatePlaylist(playlistID, document.getElementById('playlistNewName').value).then(() => {
-                    getPlaylists(10, 0).then((res) => { dispatch(setPlaylists(res.data)); });
+                    getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                 });
                 setShowAlert(false);
             },
@@ -45,7 +45,7 @@ export default function PlaylistActions() {
         const data = {
             firstAction: () => {
                 deletePlaylist(playlistID).then(() => {
-                    getPlaylists(10, 0).then((res) => { 
+                    getPlaylists().then((res) => { 
                         dispatch(setPlaylists(res.data));
                         router.push('/playlists');
                     });

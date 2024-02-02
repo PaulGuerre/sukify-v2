@@ -16,7 +16,7 @@ export default function AddPlaylist() {
         const data = {
             firstAction: () => {
                 createPlaylist(document.getElementById('playlistName').value).then(() => {
-                    getPlaylists(10, 0).then((res) => { dispatch(setPlaylists(res.data)); });
+                    getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                 });
                 setShowAlert(false);
             },

@@ -210,15 +210,8 @@ app.get('/getMusics', (req, res) => {
 /**
  * Get playlists depending on the offset and the limit
  */
-app.get('/getPlaylists', (req, res) => {
-    const range = { limit: req.query.limit, offset: req.query.offset };
-
-    if (!range.limit || !range.offset) {
-        console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
-    }
-
-    getPlaylists(range).then((results) => {
+app.get('/getPlaylists', (res) => {
+    getPlaylists().then((results) => {
         console.log('Playlists retrieved');
         res.status(200).send(results);
     }).catch((err) => {

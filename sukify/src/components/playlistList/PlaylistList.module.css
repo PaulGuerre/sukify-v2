@@ -4,6 +4,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: start;
+    align-content: start;
 }
 
 .empty {
@@ -26,6 +27,5 @@
         width: 100%;
         justify-content: center;
         margin-top: 64px;
-        align-content: start;
     }
 }

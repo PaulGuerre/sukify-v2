@@ -6,15 +6,16 @@ import MusicList from '@/components/musicList/MusicList';
 import { getMusics } from "@/utils/api";
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { setMusics } from '@/store/musicsSlice';
+import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { setCurrentPlaylist } from '@/store/playlistsSlice';
 
 export default function Musics() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      getMusics(10, 0).then((res) => {
+      getMusics(1000, 0).then((res) => {
           dispatch(setMusics(res.data));
+          dispatch(setCurrentMusics(res.data.slice(0, 10)));
       });
       dispatch(setCurrentPlaylist({ id: null, name: 'Musics' }));
   }, []);
