@@ -25,7 +25,7 @@
 @media (max-width: 768px) {
     .playlists {
         width: 100%;
-        justify-content: center;
+        justify-content: space-between;
         margin-top: 64px;
     }
 }
