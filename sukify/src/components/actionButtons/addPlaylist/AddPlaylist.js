@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './AddPlaylist.module.css';
 import plusWhite from '@/lib/icons/plus.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { createPlaylist, getPlaylists } from '@/utils/api';
 import { useDispatch } from 'react-redux';
@@ -9,13 +9,21 @@ import { setPlaylists } from '@/store/playlistsSlice';
 
 export default function AddPlaylist() {
     const dispatch = useDispatch();
+
     const [ showAlert, setShowAlert ] = useState(false);
     const [ alertData, setAlertData ] = useState({});
+
+    const playlistNameRef = useRef(null);
 
     const addPlaylist = () => {
         const data = {
             firstAction: () => {
-                createPlaylist(document.getElementById('playlistName').value).then(() => {
+                const playlistName = playlistNameRef.current;
+                if (playlistName.value === '' || playlistName.value.length > 20) {
+                    playlistName.className += ` ${styles.inputAlertInvalid}`;
+                    return;
+                }
+                createPlaylist(playlistName.value).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                 });
                 setShowAlert(false);
@@ -24,7 +32,7 @@ export default function AddPlaylist() {
             form: (
                 <div className={styles.addAlert}>
                     <p className={styles.textAlert}>What is the name of the playlist ?</p>
-                    <input type="text" id='playlistName' />
+                    <input type="text" ref={playlistNameRef} className={styles.inputAlert} />
                 </div>
             )
         };

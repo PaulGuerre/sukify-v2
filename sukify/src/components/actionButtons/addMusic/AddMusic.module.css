@@ -16,7 +16,7 @@
     align-items: center;
 }
 
-.addAlert > input {
+.inputAlert {
     width: 70%;
     padding: 8px;
     border-radius: 8px;
@@ -28,4 +28,8 @@
 .textAlert {
     font-size: 16px;
     font-weight: bold;
+}
+
+.inputAlertInvalid {
+    border: 1px solid red;
 }

@@ -4,7 +4,7 @@ import edit from '@/lib/icons/edit.svg';
 import editGrey from '@/lib/icons/edit_grey.svg';
 import trash from '@/lib/icons/trash.svg';
 import trashColor from '@/lib/icons/trash_color.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { getPlaylists, updatePlaylist, deletePlaylist } from '@/utils/api';
 import { setPlaylists } from '@/store/playlistsSlice';
@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 export default function PlaylistActions() {
     const router = useRouter();
     const dispatch = useDispatch();
+
     const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
 
     const [ isEditHovered, setIsEditHovered ] = useState(false);
@@ -21,10 +22,17 @@ export default function PlaylistActions() {
     const [ showAlert, setShowAlert ] = useState(false);
     const [ alertData, setAlertData ] = useState({});
 
+    const playlistNewNameRef = useRef(null);
+
     const renamePlaylist = () => {
         const data = {
             firstAction: () => {
-                updatePlaylist(playlistID, document.getElementById('playlistNewName').value).then(() => {
+                const playlistNewName = playlistNewNameRef.current;
+                if (playlistNewName.value === '' || playlistNewName.value.length > 20) {
+                    playlistNewName.className += ` ${styles.inputAlertInvalid}`;
+                    return;
+                }
+                updatePlaylist(playlistID, playlistNewName.value).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                 });
                 setShowAlert(false);
@@ -33,7 +41,7 @@ export default function PlaylistActions() {
             form: (
                 <div className={styles.renameAlert}>
                     <p className={styles.textAlert}>What is the new name of the playlist ?</p>
-                    <input type="text" id='playlistNewName' />
+                    <input type="text" ref={playlistNewNameRef} className={styles.inputAlert} />
                 </div>
             )
         };

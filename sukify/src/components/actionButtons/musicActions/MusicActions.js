@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './MusicActions.module.css';
 import dots from '@/lib/icons/dots.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
 import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, updateMusic } from '@/utils/api';
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
@@ -18,6 +18,8 @@ export default function MusicActions({ musicID }) {
     const [ showAlert, setShowAlert ] = useState(false);
     const [ alertData, setAlertData ] = useState({});
 
+    const newMusicNameRef = useRef(null);
+
     const updateMusics = (res) => {
         dispatch(setMusics(res.data));
         dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
@@ -26,7 +28,12 @@ export default function MusicActions({ musicID }) {
     const renameMusic = () => {
         const data = {
             firstAction: () => {
-                updateMusic(musicID, document.getElementById('musicNewName').value).then(() => {
+                const newMusicName = newMusicNameRef.current;
+                if (newMusicName.value === '' || newMusicName.value.length > 50) {
+                   newMusicName.className += ` ${styles.inputAlertInvalid}`;
+                    return;
+                }
+                updateMusic(musicID, newMusicName.value).then(() => {
                     playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
@@ -35,7 +42,7 @@ export default function MusicActions({ musicID }) {
             form: (
                 <div className={styles.renameAlert}>
                     <p className={styles.textAlert}>What is the new name of the music ?</p>
-                    <input type="text" id='musicNewName' />
+                    <input type="text" ref={musicNewNameRef} className={styles.inputAlert} />
                 </div>
             )
         };
