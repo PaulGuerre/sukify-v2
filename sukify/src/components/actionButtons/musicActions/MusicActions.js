@@ -3,9 +3,10 @@ import styles from './MusicActions.module.css';
 import dots from '@/lib/icons/dots.svg';
 import { useRef, useState } from 'react';
 import CustomAlert from '@/components/customAlert/CustomAlert';
-import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, updateMusic } from '@/utils/api';
+import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, getPlaylistMusics, getPlaylists, updateMusic } from '@/utils/api';
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { setPlaylists } from '@/store/playlistsSlice';
 
 export default function MusicActions({ musicID }) {
     const dispatch = useDispatch();
@@ -23,6 +24,12 @@ export default function MusicActions({ musicID }) {
     const updateMusics = (res) => {
         dispatch(setMusics(res.data));
         dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
+    }
+
+    const setupModal = (data) => {
+        setAlertData(data);
+        setShowAlert(true);
+        setIsVisible(false);
     }
 
     const renameMusic = () => {
@@ -46,15 +53,14 @@ export default function MusicActions({ musicID }) {
                 </div>
             )
         };
-        setAlertData(data);
-        setShowAlert(true);
-        setIsVisible(false);
+        setupModal(data);
     }
 
     const removeMusicFromPlaylist = () => {
         const data = {
             firstAction: () => {
                 deleteMusicFromPlaylist(playlistID, musicID).then(() => {
+                    getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
@@ -66,15 +72,14 @@ export default function MusicActions({ musicID }) {
                 </div>
             )
         };
-        setAlertData(data);
-        setShowAlert(true);
-        setIsVisible(false);
+        setupModal(data);
     }
 
     const removeMusic = () => {        
         const data = {
             firstAction: () => {
                 deleteMusic(musicVideoID).then(() => {
+                    getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     getMusics(1000, 0).then((res) => { updateMusics(res); });
                 });
                 setShowAlert(false);
@@ -86,15 +91,15 @@ export default function MusicActions({ musicID }) {
                 </div>
             )
         };
-        setAlertData(data);
-        setShowAlert(true);
-        setIsVisible(false);
+        setupModal(data);
     }
 
     const addMusic = () => {
         const data = {
             firstAction: () => {
-                addMusicToPlaylist(document.getElementById('playlistChosen').value, musicID);
+                addMusicToPlaylist(document.getElementById('playlistChosen').value, musicID).then(() => {
+                    getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
+                });
                 setShowAlert(false);
             },
             secondAction: () => setShowAlert(false),
@@ -107,9 +112,7 @@ export default function MusicActions({ musicID }) {
                 </div>
             )
         };
-        setAlertData(data);
-        setShowAlert(true);
-        setIsVisible(false);
+        setupModal(data);
     }
 
     return (
