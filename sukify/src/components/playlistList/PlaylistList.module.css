@@ -1,10 +1,12 @@
 .playlists {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
+    overflow-y: scroll;
 }
 
 .empty {
@@ -24,8 +26,6 @@
 
 @media (max-width: 768px) {
     .playlists {
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 64px;
+        justify-content: space-evenly;
     }
 }
