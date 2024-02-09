@@ -1,20 +1,38 @@
 import styles from "./Music.module.css";
 import MusicActions from "../actionButtons/musicActions/MusicActions";
 import PlayButton from "../actionButtons/playButton/PlayButton";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentMusic } from "@/store/musicsSlice";
 
 export default function Music({ music }) {
+    const dispatch = useDispatch();
+    const currentPlaylist = useSelector((state) => state.playlists.currentPlaylist);
+    const [ isHovered, setIsHovered ] = useState(false);
+
+    const isMobile = () => {
+        if (typeof window === 'undefined') return false;
+        return window.innerWidth < 768 ? true : false;
+    };
+
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds.toFixed(0)}`;
     }
 
-    const isHovered = (id) => id === music.id;
+    const play = (doCheck) => {
+        if (doCheck) {
+            isMobile() ? dispatch(setCurrentMusic({ ...music, playlistName: currentPlaylist.name })) : null;
+        } else {
+            dispatch(setCurrentMusic({ ...music, playlistName: currentPlaylist.name }));
+        }
+    };
 
     return (
-        <div className={styles.music} onMouseEnter={() => isHovered(music.id)} onMouseLeave={() => isHovered(null)}>
-            <div className={styles.main}>
-                { isHovered(music.id) ? <PlayButton /> : <div className={styles.musicKey}>{music.id}</div> }
+        <div className={styles.music} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <div className={styles.main} onClick={() => play(true)}>
+                { isHovered ? <PlayButton play={() => play(false)} /> : <div className={styles.musicKey}>{music.id}</div> }
                 <img src={`https://img.youtube.com/vi/${music.musicID}/maxresdefault.jpg`} alt="music thumbnail" />
                 <div className={styles.musicTitle}>{music.musicTitle}</div>
             </div>

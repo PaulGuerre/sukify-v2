@@ -1,6 +1,5 @@
 .header {
     width: 250px;
-    height: 90%;
     z-index: 3;
     overflow-y: clip;
 }
@@ -13,7 +12,6 @@
     align-items: flex-start;
     background: linear-gradient(45deg, #00E676, #00B0FF);
     gap: 16px;
-    overflow: scroll;
 }
 
 .button {

@@ -62,6 +62,10 @@
         justify-content: flex-start;
     }
 
+    .main > div:first-child, .main > button:first-child {
+        display: none;
+    }
+
     .main > img {
         display: none;
     }

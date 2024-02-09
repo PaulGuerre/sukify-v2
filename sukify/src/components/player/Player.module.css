@@ -2,7 +2,50 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 4;
     width: 100%;
-    height: 10%;
+    height: 70px;
     background: linear-gradient(45deg, #00E676, #00B0FF);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.first {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px;
+}
+
+.infos p {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.first > img {
+    width: 100px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+}
+
+@media (max-width: 768px) {
+    .player {
+        z-index: 0;
+    }
+
+    .player .first {
+        display: none;
+    }
 }

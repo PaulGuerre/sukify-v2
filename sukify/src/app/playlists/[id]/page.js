@@ -19,8 +19,11 @@ export default function Playlist({ params }) {
       dispatch(setMusics(res.data));
       dispatch(setCurrentMusics(res.data.slice(0, 10)));
     });
-    dispatch(setCurrentPlaylist({ id: params.id, name: playlistName }));
   }, []);
+
+  useEffect(() => {
+    dispatch(setCurrentPlaylist({ id: params.id, name: playlistName }));
+  }, [playlistName]);
 
   return (
     <div className={styles.playlist}>
