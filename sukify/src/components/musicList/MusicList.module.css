@@ -1,9 +1,13 @@
 .musics {
     width: 100%;
-    height: 90%;
+    height: calc(100% - 70px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.list {
+    height: 100%;
     overflow-y: scroll;
 }
 
