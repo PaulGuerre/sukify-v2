@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { setCurrentPlaylist } from '@/store/playlistsSlice';
-import Player from '@/components/player/Player';
 
 export default function Playlist({ params }) {
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ export default function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <MusicList title={playlistName} isPlaylist={true} />
-      <Player />
     </div>
   )
 }

@@ -49,7 +49,7 @@ export default function MusicActions({ musicID }) {
             form: (
                 <div className={styles.renameAlert}>
                     <p className={styles.textAlert}>What is the new name of the music ?</p>
-                    <input type="text" ref={musicNewNameRef} className={styles.inputAlert} />
+                    <input type="text" ref={newMusicNameRef} className={styles.inputAlert} />
                 </div>
             )
         };

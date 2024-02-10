@@ -208,6 +208,21 @@ app.get('/getMusics', (req, res) => {
 });
 
 /**
+ * Get the music
+ */
+app.get('/getMusic/:musicID', (req, res) => {
+    const musicID = req.params.musicID;
+
+    if (!fs.existsSync(musicsFolder + musicID + '.mp3')) {
+        console.log('Error : the music does not exist');
+        return res.status(500).send('The music does not exist');
+    }
+
+    console.log('Music retrieved');
+    res.sendFile(musicsFolder + musicID + '.mp3'); 
+});
+
+/**
  * Get playlists depending on the offset and the limit
  */
 app.get('/getPlaylists', (req, res) => {

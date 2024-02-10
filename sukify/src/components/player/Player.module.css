@@ -12,8 +12,10 @@
 }
 
 .first {
+    width: 33%;
     display: flex;
     flex-direction: row;
+    flex-direction: flex-start;
     align-items: center;
     padding: 0 16px;
 }
@@ -23,6 +25,7 @@
     flex-direction: column;
     gap: 8px;
     padding: 0 16px;
+    overflow: hidden;
 }
 
 .infos p {
@@ -38,6 +41,30 @@
     width: 100px;
     border-radius: 8px;
     border: 1px solid #fff;
+}
+
+.second {
+    width: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.second > img {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.third {
+    width: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 16px;
 }
 
 @media (max-width: 768px) {
