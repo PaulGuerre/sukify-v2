@@ -45,9 +45,7 @@ export default function Header() {
                 <Link href="/playlists" className={styles.link} onClick={() => setIsVisible(!isVisible)}>Playlists</Link>
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
-                {playlists.slice(0, 5).map((playlist) => (
-                    <Link href={`/playlists/${playlist.id}`} className={styles.link} onClick={() => setIsVisible(!isVisible)} key={playlist.id}>{playlist.name}</Link>
-                ))}
+                <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} onClick={() => setIsVisible(!isVisible)} key={playlist.id}>{playlist.name}</Link>))}</div>
             </div>
         </div>
     );
