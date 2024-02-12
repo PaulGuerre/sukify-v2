@@ -2,7 +2,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 4;
+    z-index: 3;
     width: 100%;
     height: 70px;
     background: linear-gradient(45deg, #00E676, #00B0FF);
@@ -69,7 +69,7 @@
 
 @media (max-width: 768px) {
     .player {
-        z-index: 0;
+        z-index: 1;
     }
 
     .player .first {

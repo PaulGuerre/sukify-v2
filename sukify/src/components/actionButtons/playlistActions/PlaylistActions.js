@@ -10,12 +10,14 @@ import { getPlaylists, updatePlaylist, deletePlaylist } from '@/utils/api';
 import { setPlaylists } from '@/store/playlistsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { setCurrentMusic, setIsPlaying } from '@/store/playerSlice';
 
 export default function PlaylistActions() {
     const router = useRouter();
     const dispatch = useDispatch();
 
     const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
+    const { currentMusic, isPlaying } = useSelector((state) => state.player);
 
     const [ isEditHovered, setIsEditHovered ] = useState(false);
     const [ isTrashHovered, setIsTrashHovered ] = useState(false);
@@ -34,6 +36,10 @@ export default function PlaylistActions() {
                 }
                 updatePlaylist(playlistID, playlistNewName.value).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
+                    if (currentMusic.playlistID === playlistID) {
+                        dispatch(setCurrentMusic({ ...currentMusic, playlistName: playlistNewName.value }));
+                        dispatch(setIsPlaying(!isPlaying));
+                    }
                 });
                 setShowAlert(false);
             },

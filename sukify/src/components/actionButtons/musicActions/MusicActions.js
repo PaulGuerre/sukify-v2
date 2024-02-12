@@ -7,6 +7,7 @@ import { addMusicToPlaylist, deleteMusic, deleteMusicFromPlaylist, getMusics, ge
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaylists } from '@/store/playlistsSlice';
+import { setCurrentMusic, setIsPlaying, setPlayingMusics } from '@/store/playerSlice';
 
 export default function MusicActions({ musicID }) {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export default function MusicActions({ musicID }) {
     const playlistID = useSelector((state) => state.playlists.currentPlaylist.id);
     const musicVideoID = useSelector((state) => state.musics.musics.find((music) => music.id === musicID).musicID);
     const currentIndex = useSelector((state) => state.musics.currentIndex);
+    const { currentMusic, isPlaying, playingMusics } = useSelector((state) => state.player);
+
 
     const [ isVisible, setIsVisible ] = useState(false);
     const [ showAlert, setShowAlert ] = useState(false);
@@ -24,6 +27,11 @@ export default function MusicActions({ musicID }) {
     const updateMusics = (res) => {
         dispatch(setMusics(res.data));
         dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
+    }
+
+    const updateCurrentMusic = (currentMusic) => {
+        dispatch(setCurrentMusic(currentMusic));
+        dispatch(setIsPlaying(!isPlaying));
     }
 
     const setupModal = (data) => {
@@ -42,6 +50,8 @@ export default function MusicActions({ musicID }) {
                 }
                 updateMusic(musicID, newMusicName.value).then(() => {
                     playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
+                    currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
+                    currentMusic.id === musicID && updateCurrentMusic({ ...currentMusic, musicTitle: newMusicName.value });
                 });
                 setShowAlert(false);
             },
@@ -61,7 +71,14 @@ export default function MusicActions({ musicID }) {
             firstAction: () => {
                 deleteMusicFromPlaylist(playlistID, musicID).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
-                    getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); });
+                    getPlaylistMusics(playlistID, 1000, 0).then((res) => {
+                        updateMusics(res);
+                        dispatch(setPlayingMusics(res.data));
+                    });
+                    if (currentMusic.id === musicID) {
+                        const nextIndex = (playingMusics.findIndex((music) => music.id === musicID) + 1) % playingMusics.length;
+                        updateCurrentMusic({ ...playingMusics[nextIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName });
+                    }
                 });
                 setShowAlert(false);
             },
@@ -81,6 +98,11 @@ export default function MusicActions({ musicID }) {
                 deleteMusic(musicVideoID).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     getMusics(1000, 0).then((res) => { updateMusics(res); });
+                    currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
+                    if (currentMusic.id === musicID) {
+                        const nextIndex = (playingMusics.findIndex((music) => music.id === musicID) + 1) % playingMusics.length;
+                        updateCurrentMusic({ ...playingMusics[nextIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName });
+                    }
                 });
                 setShowAlert(false);
             },
@@ -97,8 +119,10 @@ export default function MusicActions({ musicID }) {
     const addMusic = () => {
         const data = {
             firstAction: () => {
-                addMusicToPlaylist(document.getElementById('playlistChosen').value, musicID).then(() => {
+                const chosenPlaylist = document.getElementById('playlistChosen').value;
+                addMusicToPlaylist(chosenPlaylist, musicID).then(() => {
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
+                    chosenPlaylist === currentMusic.playlistID && getPlaylistMusics(chosenPlaylist, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); })
                 });
                 setShowAlert(false);
             },

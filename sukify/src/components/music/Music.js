@@ -3,13 +3,16 @@ import MusicActions from "../actionButtons/musicActions/MusicActions";
 import PlayButton from "../actionButtons/playButton/PlayButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentMusic } from "@/store/musicsSlice";
+import { setCurrentMusic } from "@/store/playerSlice";
+import { setPlayingMusics } from "@/store/playerSlice";
 
 export default function Music({ music }) {
     const dispatch = useDispatch();
+
     const currentPlaylist = useSelector((state) => state.playlists.currentPlaylist);
-    const currentMusic = useSelector((state) => state.musics.currentMusic);
-    const isPlaying = useSelector((state) => state.player.isPlaying);
+    const musics = useSelector((state) => state.musics.musics);
+    const { currentMusic, isPlaying } = useSelector((state) => state.player);
+    
     const [ isHovered, setIsHovered ] = useState(false);
     const [ isMusicPlaying, setIsMusicPlaying ] = useState(false);
 
@@ -26,9 +29,13 @@ export default function Music({ music }) {
 
     const play = (doCheck) => {
         if (doCheck) {
-            isMobile() ? dispatch(setCurrentMusic({ ...music, playlistName: currentPlaylist.name })) : null;
+            isMobile() ? () => {
+                dispatch(setCurrentMusic({ ...music, playlistID: currentPlaylist.id, playlistName: currentPlaylist.name }))
+                dispatch(setPlayingMusics(musics));
+            } : null;
         } else {
-            dispatch(setCurrentMusic({ ...music, playlistName: currentPlaylist.name }));
+            dispatch(setCurrentMusic({ ...music, playlistID: currentPlaylist.id, playlistName: currentPlaylist.name }));
+            dispatch(setPlayingMusics(musics));
         }
     };
 

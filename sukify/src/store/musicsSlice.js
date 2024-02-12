@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    musics: [],
-    currentMusics:[],
-    currentMusic: {},
-    currentIndex: 0
+    musics: [], // all the musics
+    currentMusics:[], // the musics that are currently being displayed
+    currentIndex: 0 // the index of the current musics displayed
 }
 
 export const musicsSlice = createSlice({
@@ -17,14 +16,11 @@ export const musicsSlice = createSlice({
         setCurrentMusics: (state, action) => {
             state.currentMusics = action.payload;
         },
-        setCurrentMusic: (state, action) => {
-            state.currentMusic = action.payload;
-        },
         setCurrentIndex: (state, action) => {
             state.currentIndex = action.payload;
         }
     },
 });
 
-export const { setMusics, setCurrentMusics, setCurrentMusic, setCurrentIndex } = musicsSlice.actions;
+export const { setMusics, setCurrentMusics, setCurrentIndex } = musicsSlice.actions;
 export default musicsSlice.reducer;

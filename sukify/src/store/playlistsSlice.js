@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    playlists: [],
-    currentPlaylist: {}
+    playlists: [], // all the playlists
+    currentPlaylist: {} // the playlist currently being displayed
 }
 
 export const playlistsSlice = createSlice({

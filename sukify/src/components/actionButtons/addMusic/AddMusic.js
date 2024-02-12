@@ -8,6 +8,7 @@ import { downloadMusic, getMusics } from '@/utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import Loader from '@/components/loader/Loader';
+import { setPlayingMusics } from '@/store/playerSlice';
 
 export default function AddMusic() {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function AddMusic() {
     const musicNameRef = useRef(null);
 
     const currentIndex = useSelector((state) => state.musics.currentIndex);
+    const currentMusic = useSelector((state) => state.player.currentMusic);
 
     const addMusic = () => {
         const data = {
@@ -34,6 +36,7 @@ export default function AddMusic() {
                     getMusics(1000, 0).then((res) => { 
                         dispatch(setMusics(res.data)); 
                         dispatch(setCurrentMusics(res.data.slice(currentIndex, currentIndex + 10)));
+                        !currentMusic.playlistID && dispatch(setPlayingMusics(res.data));
                     });
                 });
                 setShowAlert(false);

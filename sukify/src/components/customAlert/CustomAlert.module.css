@@ -48,6 +48,10 @@
 }
 
 @media (max-width: 500px) {
+    .alert {
+        z-index: 4;
+    }
+
     .main {
         max-width: 300px;
     }

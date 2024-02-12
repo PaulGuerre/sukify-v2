@@ -8,10 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
 }
 
 .loader > img {
     width: 128px;
     height: 128px;
+}
+
+@media (max-width: 500px) {
+    .loader {
+        z-index: 2;
+    }
 }
