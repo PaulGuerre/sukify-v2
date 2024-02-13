@@ -2,7 +2,7 @@ import { setCurrentMusic, setIsPlaying } from "@/store/playerSlice";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function AudioManager() {
+export default function AudioManager({ handleTimeUpdate }) {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
     const playingMusics = useSelector((state) => state.player.playingMusics);
@@ -36,6 +36,14 @@ export default function AudioManager() {
             dispatch(setCurrentMusic({ ...playingMusics[nextIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName }));
         }
     }, [playingMusics, currentMusic]);
+
+    useEffect(() => {
+        audioRef.current.ontimeupdate = () => handleTimeUpdate({
+            timePercentage: (audioRef.current.currentTime / audioRef.current.duration) * 100, 
+            currentTime: audioRef.current.currentTime, 
+            duration: audioRef.current.duration
+        });
+    }, [handleTimeUpdate]);
 
     return ( <audio ref={audioRef} /> )
 }

@@ -24,7 +24,7 @@ export default function MusicList({ title = 'Musics', isPlaylist = false }) {
             <MusicListHeader title={title} musicCount={musics.length} isPlaylist={isPlaylist} />
             { 
                 currentMusics.length ? <>
-                    <div className={styles.list}>{currentMusics.map((music) => <Music key={music.id} music={music} /> )}</div>
+                    {currentMusics.map((music) => <Music key={music.id} music={music} /> )}
                     <Pagination />
                 </> : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> 
             }
