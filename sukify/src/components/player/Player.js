@@ -1,7 +1,7 @@
 'use client'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './player.module.css';
 import { setIsPlaying, setPlayingMusics } from '@/store/playerSlice';
 import Image from 'next/image';
@@ -21,10 +21,11 @@ export default function Player() {
 
     const [ musicTime, setMusicTime ] = useState(0);
     const [ volume, setVolume ] = useState(0.5);
+    const [ timer, setTimer ] = useState(0);
 
     const handleTimeUpdate = (newMusicTime) => {
         setMusicTime(newMusicTime);
-    }
+    };
 
     const changeMusic = useCallback((offset) => {
         const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
@@ -52,7 +53,7 @@ export default function Player() {
 
     return (
         <div className={styles.player}>
-            <AudioManager handleTimeUpdate={handleTimeUpdate} volume={volume} />
+            <AudioManager handleTimeUpdate={handleTimeUpdate} volume={volume} timer={timer} />
             <div className={styles.first}>
                 { currentMusic.musicID && <img src={`https://img.youtube.com/vi/${currentMusic.musicID}/maxresdefault.jpg`} alt="music thumbnail" />}
                 <div className={styles.infos}>
@@ -67,9 +68,9 @@ export default function Player() {
                     <Image onClick={playNext} src={next} alt="next icon" />
                 </div>
                 <div className={styles.time}>
-                    { musicTime.currentTime && <p>{ formatTime(musicTime.currentTime) }</p> }
-                    <progress value={musicTime?.timePercentage || 0} max="100" />
-                    { musicTime.duration && <p>{ formatTime(musicTime.duration) }</p> }
+                    <p>{ musicTime.currentTime ? formatTime(musicTime.currentTime) : '' }</p>
+                    <input type="range" min="0" max="100" step="0.01" value={musicTime.timePercentage || 0} onChange={(e) => setTimer(e.target.value)} />
+                    <p>{ musicTime.duration ? formatTime(musicTime.duration) : '' }</p>
                 </div>
             </div>
             <div className={styles.third}>
