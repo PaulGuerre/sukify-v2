@@ -5,6 +5,12 @@
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
 }
 
 .empty {
