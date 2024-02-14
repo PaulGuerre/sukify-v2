@@ -20,6 +20,7 @@ export default function Player() {
     const { playingMusics, currentMusic, isPlaying } = useSelector((state) => state.player);
 
     const [ musicTime, setMusicTime ] = useState(0);
+    const [ volume, setVolume ] = useState(0.5);
 
     const handleTimeUpdate = (newMusicTime) => {
         setMusicTime(newMusicTime);
@@ -51,7 +52,7 @@ export default function Player() {
 
     return (
         <div className={styles.player}>
-            <AudioManager handleTimeUpdate={handleTimeUpdate} />
+            <AudioManager handleTimeUpdate={handleTimeUpdate} volume={volume} />
             <div className={styles.first}>
                 { currentMusic.musicID && <img src={`https://img.youtube.com/vi/${currentMusic.musicID}/maxresdefault.jpg`} alt="music thumbnail" />}
                 <div className={styles.infos}>
@@ -72,7 +73,7 @@ export default function Player() {
                 </div>
             </div>
             <div className={styles.third}>
-
+                <input type="range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(e.target.value)} />
             </div>
         </div>
     );
