@@ -16,10 +16,7 @@ export default function Music({ music }) {
     const [ isHovered, setIsHovered ] = useState(false);
     const [ isMusicPlaying, setIsMusicPlaying ] = useState(false);
 
-    const isMobile = () => {
-        if (typeof window === 'undefined') return false;
-        return window.innerWidth < 768 ? true : false;
-    };
+    const isMobile = typeof window === 'undefined' ? false : window.innerWidth < 768 ? true : false;
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -29,10 +26,10 @@ export default function Music({ music }) {
 
     const play = (doCheck) => {
         if (doCheck) {
-            isMobile() ? () => {
+            if (isMobile) {
                 dispatch(setCurrentMusic({ ...music, playlistID: currentPlaylist.id, playlistName: currentPlaylist.name }))
                 dispatch(setPlayingMusics(musics));
-            } : null;
+            }
         } else {
             dispatch(setCurrentMusic({ ...music, playlistID: currentPlaylist.id, playlistName: currentPlaylist.name }));
             dispatch(setPlayingMusics(musics));

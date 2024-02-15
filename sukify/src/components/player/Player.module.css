@@ -166,7 +166,11 @@
         z-index: 1;
     }
 
-    .player .first {
+    .infos {
         display: none;
+    }
+
+    .third input[type=range] {
+        width: 100%;
     }
 }
