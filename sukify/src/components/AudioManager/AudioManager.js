@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function AudioManager({ handleTimeUpdate, volume, timer }) {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
-    const playingMusics = useSelector((state) => state.player.playingMusics);
-    const currentMusic = useSelector((state) => state.player.currentMusic);
-    const { isPlaying } = useSelector((state) => state.player);
+    const { isPlaying, currentMusic, playingMusics, musicMode } = useSelector((state) => state.player);
 
     useEffect(() => {
         if (!currentMusic.musicID) return;
@@ -31,11 +29,19 @@ export default function AudioManager({ handleTimeUpdate, volume, timer }) {
     
     useEffect(() => {
         audioRef.current.onended = () => {
-            const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
-            const nextIndex = (currentIndex + 1) % playingMusics.length;
-            dispatch(setCurrentMusic({ ...playingMusics[nextIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName }));
+            if (musicMode === 'repeat') {
+                audioRef.current.currentTime = 0;
+                audioRef.current.play();
+            } else if (musicMode === 'shuffle') {
+                const randomIndex = Math.floor(Math.random() * playingMusics.length);
+                dispatch(setCurrentMusic({ ...playingMusics[randomIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName }));
+            } else {
+                const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
+                const nextIndex = (currentIndex + 1) % playingMusics.length;
+                dispatch(setCurrentMusic({ ...playingMusics[nextIndex], playlistID: currentMusic.playlistID, playlistName: currentMusic.playlistName }));
+            }
         }
-    }, [playingMusics, currentMusic]);
+    }, [playingMusics, currentMusic, musicMode]);
 
     useEffect(() => {
         audioRef.current.onpause = () => dispatch(setIsPlaying(false));

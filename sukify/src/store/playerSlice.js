@@ -5,6 +5,7 @@ const initialState = {
     playingMusics: [], // the musics that are currently being played
     playingPlaylist: {}, // the playlist that is currently being played
     currentMusic: {}, // the music that is currently being played
+    musicMode: 'repeat' // the music mode (repeat, shuffle)
 }
 
 export const playerSlice = createSlice({
@@ -22,9 +23,12 @@ export const playerSlice = createSlice({
         },
         setCurrentMusic: (state, action) => {
             state.currentMusic = action.payload;
+        },
+        setMusicMode: (state, action) => {
+            state.musicMode = action.payload;
         }
     },
 });
 
-export const { setIsPlaying, setPlayingMusics, setPlayingPlaylist, setCurrentMusic } = playerSlice.actions;
+export const { setIsPlaying, setPlayingMusics, setPlayingPlaylist, setCurrentMusic, setMusicMode } = playerSlice.actions;
 export default playerSlice.reducer;

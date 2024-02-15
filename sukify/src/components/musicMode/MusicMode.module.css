@@ -1,0 +1,13 @@
+.musicMode {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.musicMode > img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}

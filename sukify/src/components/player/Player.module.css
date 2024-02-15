@@ -155,6 +155,7 @@
     justify-content: flex-end;
     align-items: center;
     padding: 0 16px;
+    gap: 8px;
 }
 
 .third input[type=range] {
@@ -171,6 +172,10 @@
     }
 
     .third input[type=range] {
-        width: 100%;
+        display: none;
+    }
+
+    .first, .second, .third {
+        padding: 0 8px;
     }
 }

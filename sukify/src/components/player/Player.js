@@ -11,6 +11,7 @@ import previous from '@/lib/icons/previous.svg';
 import next from '@/lib/icons/next.svg';
 import AudioManager from '../AudioManager/AudioManager';
 import { setCurrentMusic } from '@/store/playerSlice';
+import MusicMode from '../musicMode/MusicMode';
 
 export default function Player() {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function Player() {
 
     const handleTimeUpdate = (newMusicTime) => {
         setMusicTime(newMusicTime);
-    };
+        };
 
     const changeMusic = useCallback((offset) => {
         const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
@@ -74,6 +75,7 @@ export default function Player() {
                 </div>
             </div>
             <div className={styles.third}>
+                <MusicMode />
                 <input type="range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(e.target.value)} />
             </div>
         </div>
