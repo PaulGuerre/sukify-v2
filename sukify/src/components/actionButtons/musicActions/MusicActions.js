@@ -140,7 +140,7 @@ export default function MusicActions({ musicID }) {
     }
 
     return (
-        <div className={styles.main} onMouseLeave={() => setIsVisible(!isVisible)}>
+        <div className={styles.main} onMouseLeave={() => setIsVisible(false)}>
             { showAlert && <CustomAlert data={alertData} /> }
             <button className={styles.button} onClick={() => setIsVisible(!isVisible)}><Image src={dots} alt="three dots icon" /></button>
             {
