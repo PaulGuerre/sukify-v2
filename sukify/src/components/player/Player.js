@@ -23,10 +23,15 @@ export default function Player() {
     const [ musicTime, setMusicTime ] = useState(0);
     const [ volume, setVolume ] = useState(0.5);
     const [ timer, setTimer ] = useState(0);
+    const [ isLoading, setIsLoading ] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
     const handleTimeUpdate = (newMusicTime) => {
         setMusicTime(newMusicTime);
-        };
+    };
 
     const changeMusic = useCallback((offset) => {
         const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
@@ -53,7 +58,7 @@ export default function Player() {
     }
 
     return (
-        <div className={styles.player}>
+        isLoading ? null : <div className={styles.player}>
             <AudioManager handleTimeUpdate={handleTimeUpdate} volume={volume} timer={timer} />
             <div className={styles.first}>
                 { currentMusic.musicID && <img src={`https://img.youtube.com/vi/${currentMusic.musicID}/maxresdefault.jpg`} alt="music thumbnail" />}

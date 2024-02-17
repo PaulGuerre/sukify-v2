@@ -13,6 +13,7 @@ import Image from 'next/image';
 export default function Header() {
     const dispatch = useDispatch();
     const playlists = useSelector((state) => state.playlists.playlists);
+    const [ isLoading, setIsLoading ] = useState(true);
     const [ isVisible, setIsVisible ] = useState(false);
 
     const isMobile = () => {
@@ -24,18 +25,21 @@ export default function Header() {
         const header = document.querySelector(`.${styles.header}`);
         const button = document.querySelector(`.${styles.button}`);
 
+        if (!header || !button) return;
+
         header.style.left = (!isVisible && isMobile) ? '-100%' : '0%';
         button.style.left = (!isVisible && isMobile) ? '100%' : '16px';
     }, [isVisible]);
 
     useEffect(() => {
+        setIsLoading(false);
         getPlaylists().then((res) => {
             dispatch(setPlaylists(res.data));
         });
     }, []);
     
     return (
-        <div className={styles.header}>
+        isLoading ? null : <div className={styles.header}>
             <div className={styles.button} onClick={() => setIsVisible(!isVisible)}>
                 <Image src={isVisible ? menu : menu_color} alt="menu icon" />
             </div>

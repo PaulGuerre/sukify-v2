@@ -11,14 +11,14 @@ export const metadata = {
   description: 'Youtube music downloader and player'
 };
 
-export default function RootLayout({ children, isHome = true }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
           <Providers>
-            {isHome && <Header />}
+            <Header />
             {children}
-            {isHome && <Player />}
+            <Player />
           </Providers>
       </body>
     </html>
