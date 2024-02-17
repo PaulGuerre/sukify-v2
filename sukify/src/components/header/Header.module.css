@@ -70,12 +70,23 @@
     gap: 16px;
     padding-bottom: 16px;
     overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .list::-webkit-scrollbar {
-    display: none;
+    width: 5px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+.list {
+    scrollbar-width: thin;
+    scrollbar-color: grey transparent;
 }
 
 @media (max-width: 768px) {

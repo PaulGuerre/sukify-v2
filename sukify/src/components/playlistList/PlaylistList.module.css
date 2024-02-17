@@ -7,12 +7,23 @@
     justify-content: flex-start;
     align-content: flex-start;
     overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
-.list::-webkit-scrollbar {
-    display: none;
+.playlists::-webkit-scrollbar {
+    width: 5px;
+}
+
+.playlists::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.playlists::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+.playlists {
+    scrollbar-width: thin;
+    scrollbar-color: grey transparent;
 }
 
 .empty {
