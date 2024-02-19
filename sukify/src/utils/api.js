@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const getToken = (username, password) => {
+    return axios.post(`http://localhost:7000/login`, { username, password });
+}
+
 export const getMusics = (limit, offset) => {
     return axios.get(`http://localhost:7000/getMusics?limit=${limit}&offset=${offset}`);
 }

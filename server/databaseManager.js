@@ -25,6 +25,23 @@ const connectDatabase = () => {
 };
 
 /**
+ * Get the user
+ */
+const getUser = (username) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM User WHERE username = '${username}'`;
+
+    connection.query(query, (err, results, fields) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(results[0]);
+    });
+  });
+};
+
+/**
  * Insert a new music
  */
 const insertMusic = ({ musicID, musicTitle, musicDuration }) => {
@@ -243,4 +260,4 @@ const endDatabase = () => {
   });
 };
 
-module.exports = {connectDatabase, endDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic};
+module.exports = {connectDatabase, endDatabase, getUser, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic};

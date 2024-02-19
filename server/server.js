@@ -1,15 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config({ path: 'credentials.env' });
 const musicsFolder = process.env.MUSICS_FOLDER; 
 
 const { downloadMP3, searchVideoByName, getMusicDuration } = require('./ytb-scraper');
-const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic } = require('./databaseManager');
+const { connectDatabase, insertMusic, insertPlaylist, updatePlaylist, deletePlaylist, deleteMusic, updateMusic, insertPlaylistMusic, getMusics, getPlaylists, getPlaylist, getPlaylistMusics, deletePlaylistMusic, getUser } = require('./databaseManager');
 
 const app = express();
 const port = 7000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 connectDatabase();
 
@@ -21,6 +26,38 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+/**
+ * Login the user and return a token
+ */
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        console.log('Error : missing parameters');
+        return res.status(500).send('Missing parameters');
+    }
+
+    getUser(username).then((user) => {
+        if (user) {
+            bcrypt.compare(password, user.password).then((result) => {
+                if (result) {
+                    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '30d' });
+                    console.log('User logged in');
+                    return res.status(200).send(token);
+                }
+                console.log('Invalid password');
+                res.status(500).send('Invalid password');
+            });
+        } else {
+            console.log('User does not exist');
+            res.status(500).send('User does not exist');
+        }
+    }).catch((err) => {
+        console.log('Error : ' + err);
+        res.status(500).send('Error while logging in');
+    });
+});
 
 /**
  * Download the video based on the videoName provided, or the url
