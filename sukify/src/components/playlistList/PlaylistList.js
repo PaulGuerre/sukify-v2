@@ -1,5 +1,3 @@
-'use client'
-
 import { useSelector } from "react-redux";
 import styles from "./PlaylistList.module.css";
 import Playlist from "../playlist/Playlist";

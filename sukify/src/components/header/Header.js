@@ -1,5 +1,3 @@
-'use client'
-
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Header.module.css';
 import Link from 'next/link';

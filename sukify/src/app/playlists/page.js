@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './page.module.css';
 import PlaylistList from '@/components/playlistList/PlaylistList';
 import Header from '@/components/header/Header';
