@@ -9,8 +9,9 @@ import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { setCurrentPlaylist } from '@/store/playlistsSlice';
 import Header from '@/components/header/Header';
 import Player from '@/components/player/Player';
+import withAuth from '@/components/HOC/withAuth';
 
-export default function Playlist({ params }) {
+function Playlist({ params }) {
   const dispatch = useDispatch();
   const playlists = useSelector((state) => state.playlists.playlists);
   
@@ -35,3 +36,5 @@ export default function Playlist({ params }) {
     </div>
   )
 }
+
+export default withAuth(Playlist);

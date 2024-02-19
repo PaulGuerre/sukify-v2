@@ -4,8 +4,9 @@ import styles from './page.module.css';
 import PlaylistList from '@/components/playlistList/PlaylistList';
 import Header from '@/components/header/Header';
 import Player from '@/components/player/Player';
+import withAuth from '@/components/HOC/withAuth';
 
-export default function Playlists() {
+function Playlists() {
   return (
     <div className={styles.playlists}>
       <Header />
@@ -14,3 +15,5 @@ export default function Playlists() {
     </div>
   );
 }
+
+export default withAuth(Playlists);

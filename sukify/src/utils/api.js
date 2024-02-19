@@ -1,49 +1,61 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+
 export const getToken = (username, password) => {
     return axios.post(`http://localhost:7000/login`, { username, password });
 }
 
 export const getMusics = (limit, offset) => {
-    return axios.get(`http://localhost:7000/getMusics?limit=${limit}&offset=${offset}`);
+    return sendRequest('get', `http://localhost:7000/getMusics?limit=${limit}&offset=${offset}`, token);
 }
 
 export const getPlaylists = () => {
-    return axios.get(`http://localhost:7000/getPlaylists`);
+    return sendRequest('get', `http://localhost:7000/getPlaylists`, token);
 }
 
 export const getPlaylistMusics = (playlistID, limit, offset) => {
-    return axios.get(`http://localhost:7000/getPlaylistMusics/${playlistID}?limit=${limit}&offset=${offset}`);
+    return sendRequest('get', `http://localhost:7000/getPlaylistMusics/${playlistID}?limit=${limit}&offset=${offset}`, token);
 }
 
 export const updatePlaylist = (playlistID, newName) => {
-    return axios.put(`http://localhost:7000/updatePlaylist/${playlistID}?newName=${newName}`);
+    return sendRequest('put', `http://localhost:7000/updatePlaylist/${playlistID}?newName=${newName}`, token);
 }
 
 export const deletePlaylist = (playlistID) => {
-    return axios.delete(`http://localhost:7000/deletePlaylist/${playlistID}`);
+    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}`, token);
 }
 
 export const updateMusic = (musicID, newName) => {
-    return axios.put(`http://localhost:7000/updateMusic/${musicID}?newName=${newName}`);
+    return sendRequest('put', `http://localhost:7000/updateMusic/${musicID}?newName=${newName}`, token);
 }
 
 export const deleteMusic = (musicID) => {
-    return axios.delete(`http://localhost:7000/deleteMusic/${musicID}`);
+    return sendRequest('delete', `http://localhost:7000/deleteMusic/${musicID}`, token);
 }
 
 export const deleteMusicFromPlaylist = (playlistID, musicID) => {
-    return axios.delete(`http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`);
+    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`, token);
 }
 
 export const addMusicToPlaylist = (playlistID, musicID) => {
-    return axios.post(`http://localhost:7000/addPlaylist/${playlistID}/music/${musicID}`);
+    return sendRequest('post', `http://localhost:7000/addPlaylist/${playlistID}/music/${musicID}`, token);
 }
 
 export const downloadMusic = (musicTitle) => {
-    return axios.post(`http://localhost:7000/download?videoName=${musicTitle}`);
+    return sendRequest('post', `http://localhost:7000/download?videoName=${musicTitle}`, token);
 }
 
 export const createPlaylist = (playlistName) => {
-    return axios.post(`http://localhost:7000/createPlaylist?playlistName=${playlistName}`);
+    return sendRequest('post', `http://localhost:7000/createPlaylist?playlistName=${playlistName}`, token);
+}
+
+const sendRequest = (method, url, token) => {
+    return axios({
+        method,
+        url,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 }

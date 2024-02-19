@@ -28,6 +28,27 @@ app.use(cors({
 }));
 
 /**
+ * Check the token
+ */
+const checkToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) {
+      return res.sendStatus(401);
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        console.log('Error : ' + err);
+        return res.sendStatus(403);
+      }
+      
+      next();
+    });
+  };
+
+/**
  * Login the user and return a token
  */
 app.post('/login', (req, res) => {
@@ -62,7 +83,7 @@ app.post('/login', (req, res) => {
 /**
  * Download the video based on the videoName provided, or the url
  */
-app.post('/download', (req, res) => {
+app.post('/download', checkToken, (req, res) => {
     const videoName = req.query.videoName;
 
     if (!videoName) {
@@ -98,7 +119,7 @@ app.post('/download', (req, res) => {
 /**
  * Create a playlist
  */
-app.post('/createPlaylist', (req, res) => {
+app.post('/createPlaylist', checkToken, (req, res) => {
     const playlistName = req.query.playlistName;
 
     if (!playlistName) {
@@ -118,7 +139,7 @@ app.post('/createPlaylist', (req, res) => {
 /**
  * Update either the name or the thumbnail of the playlist, or both
  */
-app.put('/updatePlaylist/:playlistID', (req, res) => {
+app.put('/updatePlaylist/:playlistID', checkToken, (req, res) => {
     const newPlaylist = { playlistID: req.params.playlistID, newName: req.query.newName };
 
     if (!newPlaylist.newName) {
@@ -142,7 +163,7 @@ app.put('/updatePlaylist/:playlistID', (req, res) => {
 /**
  * Delete a playlist
  */
-app.delete('/deletePlaylist/:playlistID', (req, res) => {
+app.delete('/deletePlaylist/:playlistID', checkToken, (req, res) => {
     const playlistID = req.params.playlistID;
 
     deletePlaylist(playlistID).then((results) => {
@@ -161,7 +182,7 @@ app.delete('/deletePlaylist/:playlistID', (req, res) => {
 /**
  * Delete a music
  */
-app.delete('/deleteMusic/:musicID', (req, res) => {
+app.delete('/deleteMusic/:musicID', checkToken, (req, res) => {
     const musicID = req.params.musicID;
 
     deleteMusic(musicID).then((results) => {
@@ -188,7 +209,7 @@ app.delete('/deleteMusic/:musicID', (req, res) => {
 /**
  * Update a music
  */
-app.put('/updateMusic/:musicID', (req, res) => {
+app.put('/updateMusic/:musicID', checkToken, (req, res) => {
     const music = { musicID: req.params.musicID, musicTitle: req.query.newName };
 
     if (!music.musicTitle) {
@@ -212,7 +233,7 @@ app.put('/updateMusic/:musicID', (req, res) => {
 /**
  * Add a music to a playlist
  */
-app.post('/addPlaylist/:playlistID/music/:musicID', (req, res) => {
+app.post('/addPlaylist/:playlistID/music/:musicID', checkToken, (req, res) => {
     const playlistMusic = { playlistID: req.params.playlistID, musicID: req.params.musicID };
 
     insertPlaylistMusic(playlistMusic).then(() => {
@@ -227,7 +248,7 @@ app.post('/addPlaylist/:playlistID/music/:musicID', (req, res) => {
 /**
  * Get musics depending on the offset and the limit
  */
-app.get('/getMusics', (req, res) => {
+app.get('/getMusics', checkToken, (req, res) => {
     const range = { limit: req.query.limit, offset: req.query.offset };
 
     if (!range.limit || !range.offset) {
@@ -247,7 +268,7 @@ app.get('/getMusics', (req, res) => {
 /**
  * Get the music
  */
-app.get('/getMusic/:musicID', (req, res) => {
+app.get('/getMusic/:musicID', checkToken, (req, res) => {
     const musicID = req.params.musicID;
 
     if (!fs.existsSync(musicsFolder + musicID + '.mp3')) {
@@ -262,7 +283,7 @@ app.get('/getMusic/:musicID', (req, res) => {
 /**
  * Get playlists depending on the offset and the limit
  */
-app.get('/getPlaylists', (req, res) => {
+app.get('/getPlaylists', checkToken, (req, res) => {
     getPlaylists().then((results) => {
         console.log('Playlists retrieved');
         res.status(200).send(results);
@@ -275,7 +296,7 @@ app.get('/getPlaylists', (req, res) => {
 /**
  * Get the playlist
  */
-app.get('/getPlaylist/:playlistID', (req, res) => {
+app.get('/getPlaylist/:playlistID', checkToken, (req, res) => {
     const playlistID = req.params.playlistID;
 
     getPlaylist(playlistID).then((results) => {
@@ -290,7 +311,7 @@ app.get('/getPlaylist/:playlistID', (req, res) => {
 /**
  * Get the playlist musics depending on the offset and the limit
  */
-app.get('/getPlaylistMusics/:playlistID', (req, res) => {
+app.get('/getPlaylistMusics/:playlistID', checkToken, (req, res) => {
     const data = { playlistID: req.params.playlistID, limit: req.query.limit, offset: req.query.offset };
 
     if (!data.limit || !data.offset) {
@@ -310,7 +331,7 @@ app.get('/getPlaylistMusics/:playlistID', (req, res) => {
 /**
  * Delete the music from the playlist
  */
-app.delete('/deletePlaylist/:playlistID/music/:musicID', (req, res) => {
+app.delete('/deletePlaylist/:playlistID/music/:musicID', checkToken, (req, res) => {
     const playlistMusic = { playlistID: req.params.playlistID, musicID: req.params.musicID };
 
     deletePlaylistMusic(playlistMusic).then((results) => {
