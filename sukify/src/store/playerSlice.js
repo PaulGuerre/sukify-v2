@@ -5,7 +5,7 @@ const initialState = {
     playingMusics: [], // the musics that are currently being played
     playingPlaylist: {}, // the playlist that is currently being played
     currentMusic: {}, // the music that is currently being played
-    musicMode: 'repeat', // the music mode (repeat, shuffle),
+    musicMode: '', // the music mode (repeat, shuffle),
     musicVolume: 0.5, // the music volume,
     musicTime: {}, // the music current time, duration and percentage,
     timer: 0 // the music timer
