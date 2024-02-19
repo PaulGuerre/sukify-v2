@@ -1,15 +1,14 @@
 'use client'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import styles from './player.module.css';
-import { setIsPlaying, setPlayingMusics } from '@/store/playerSlice';
+import { setIsPlaying, setMusicVolume, setPlayingMusics, setTimer } from '@/store/playerSlice';
 import Image from 'next/image';
 import pause from '@/lib/icons/pause.svg';
 import play from '@/lib/icons/play.svg';
 import previous from '@/lib/icons/previous.svg';
 import next from '@/lib/icons/next.svg';
-import AudioManager from '../AudioManager/AudioManager';
 import { setCurrentMusic } from '@/store/playerSlice';
 import MusicMode from '../musicMode/MusicMode';
 
@@ -18,20 +17,7 @@ export default function Player() {
     
     const currentPlaylist = useSelector((state) => state.playlists.currentPlaylist);
     const musics = useSelector((state) => state.musics.musics);
-    const { playingMusics, currentMusic, isPlaying } = useSelector((state) => state.player);
-
-    const [ musicTime, setMusicTime ] = useState(0);
-    const [ volume, setVolume ] = useState(0.5);
-    const [ timer, setTimer ] = useState(0);
-    const [ isLoading, setIsLoading ] = useState(true);
-
-    useEffect(() => {
-        setIsLoading(false);
-    }, []);
-
-    const handleTimeUpdate = (newMusicTime) => {
-        setMusicTime(newMusicTime);
-    };
+    const { playingMusics, currentMusic, isPlaying, musicVolume, musicTime } = useSelector((state) => state.player);
 
     const changeMusic = useCallback((offset) => {
         const currentIndex = playingMusics.findIndex((music) => music.musicID === currentMusic.musicID);
@@ -58,8 +44,7 @@ export default function Player() {
     }
 
     return (
-        isLoading ? null : <div className={styles.player}>
-            <AudioManager handleTimeUpdate={handleTimeUpdate} volume={volume} timer={timer} />
+        <div className={styles.player}>
             <div className={styles.first}>
                 { currentMusic.musicID && <img src={`https://img.youtube.com/vi/${currentMusic.musicID}/maxresdefault.jpg`} alt="music thumbnail" />}
                 <div className={styles.infos}>
@@ -75,13 +60,13 @@ export default function Player() {
                 </div>
                 <div className={styles.time}>
                     <p>{ musicTime.currentTime ? formatTime(musicTime.currentTime) : '' }</p>
-                    <input type="range" min="0" max="100" step="0.01" value={musicTime.timePercentage || 0} onChange={(e) => setTimer(e.target.value)} />
+                    <input type="range" min="0" max="100" step="0.01" value={musicTime.timePercentage || 0} onChange={(e) => dispatch(setTimer(e.target.value))} />
                     <p>{ musicTime.duration ? formatTime(musicTime.duration) : '' }</p>
                 </div>
             </div>
             <div className={styles.third}>
                 <MusicMode />
-                <input type="range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(e.target.value)} />
+                <input type="range" min="0" max="1" step="0.01" value={musicVolume} onChange={(e) => dispatch(setMusicVolume(e.target.value))} />
             </div>
         </div>
     );

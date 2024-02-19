@@ -1,11 +1,13 @@
-import { setCurrentMusic, setIsPlaying } from "@/store/playerSlice";
+'use client'
+
+import { setCurrentMusic, setIsPlaying, setMusicTime } from "@/store/playerSlice";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function AudioManager({ handleTimeUpdate, volume, timer }) {
+export default function AudioManager() {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
-    const { isPlaying, currentMusic, playingMusics, musicMode } = useSelector((state) => state.player);
+    const { isPlaying, currentMusic, playingMusics, musicMode, musicVolume, timer } = useSelector((state) => state.player);
 
     useEffect(() => {
         if (!currentMusic.musicID) return;
@@ -46,11 +48,11 @@ export default function AudioManager({ handleTimeUpdate, volume, timer }) {
     useEffect(() => {
         audioRef.current.onpause = () => dispatch(setIsPlaying(false));
         audioRef.current.onplay = () => dispatch(setIsPlaying(true));
-        audioRef.current.ontimeupdate = () => handleTimeUpdate({
-            timePercentage: (audioRef.current.currentTime / audioRef.current.duration) * 100, 
-            currentTime: audioRef.current.currentTime, 
-            duration: audioRef.current.duration
-        });
+        audioRef.current.ontimeupdate = () => dispatch(setMusicTime({
+            currentTime: audioRef.current.currentTime,
+            duration: audioRef.current.duration,
+            timePercentage: (audioRef.current.currentTime / audioRef.current.duration) * 100
+        }));
     }, []);
 
     useEffect(() => {
@@ -58,8 +60,8 @@ export default function AudioManager({ handleTimeUpdate, volume, timer }) {
     }, [timer]);
 
     useEffect(() => {
-        audioRef.current.volume = volume;
-    }, [volume]);  
+        audioRef.current.volume = musicVolume;
+    }, [musicVolume]);  
 
     return ( <audio ref={audioRef} /> )
 }

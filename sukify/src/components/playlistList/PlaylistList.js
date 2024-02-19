@@ -15,7 +15,7 @@ export default function PlaylistList() {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [playlists]);
+  }, [playlists.length]);
 
   return (
     isLoading ? <Loader /> : <div className={styles.playlists}>

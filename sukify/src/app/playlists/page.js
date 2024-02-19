@@ -1,18 +1,14 @@
-'use client'
-
-import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import PlaylistList from '@/components/playlistList/PlaylistList';
-import Loader from '@/components/loader/Loader';
+import Header from '@/components/header/Header';
+import Player from '@/components/player/Player';
 
 export default function Playlists() {
-  const [ isLoading, setIsLoading ] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   return (
-    isLoading ? <Loader /> : <div className={styles.playlists}><PlaylistList /></div>
+    <div className={styles.playlists}>
+      <Header />
+      <PlaylistList />
+      <Player />
+    </div>
   );
 }

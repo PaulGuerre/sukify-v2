@@ -1,8 +1,7 @@
 import { Providers } from '@/store/provider';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/header/Header';
-import Player from '@/components/player/Player';
+import AudioManager from '@/components/AudioManager/AudioManager';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,9 +15,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
           <Providers>
-            <Header />
             {children}
-            <Player />
+            <AudioManager />
           </Providers>
       </body>
     </html>

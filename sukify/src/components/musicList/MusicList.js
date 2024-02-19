@@ -16,7 +16,7 @@ export default function MusicList({ title = 'Musics', isPlaylist = false }) {
 
     useEffect(() => {
         setIsLoading(false);
-    }, [musics]);
+    }, [musics.length, currentMusics.length]);
 
     return (
         isLoading ? <Loader /> : 

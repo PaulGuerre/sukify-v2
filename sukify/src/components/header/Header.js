@@ -39,17 +39,17 @@ export default function Header() {
     }, []);
     
     return (
-        isLoading ? null : <div className={styles.header}>
+        <div className={styles.header}>
             <div className={styles.button} onClick={() => setIsVisible(!isVisible)}>
                 <Image src={isVisible ? menu : menu_color} alt="menu icon" />
             </div>
             <div className={styles.menu}>
                 <p className={styles.title}>Sukify</p>
-                <Link href="/musics" className={styles.link} onClick={() => setIsVisible(!isVisible)}>Musics</Link>
-                <Link href="/playlists" className={styles.link} onClick={() => setIsVisible(!isVisible)}>Playlists</Link>
+                <Link href="/musics" className={styles.link}>Musics</Link>
+                <Link href="/playlists" className={styles.link}>Playlists</Link>
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
-                <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} onClick={() => setIsVisible(!isVisible)} key={playlist.id}>{playlist.name}</Link>))}</div>
+                <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} key={playlist.id}>{playlist.name}</Link>))}</div>
             </div>
         </div>
     );
