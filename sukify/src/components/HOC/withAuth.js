@@ -3,10 +3,10 @@ import { redirect } from 'next/navigation'
 
 export default function withAuth(Component) {
   return function ProtectedRoute({...props}) {
-    const token = localStorage.getItem('token');
     const [ islogged, setIsLogged ] = useState(false);
 
     useEffect(() => {
+      const token = localStorage.getItem('token');
       if (!token) {
         redirect('/login');
       } else {
