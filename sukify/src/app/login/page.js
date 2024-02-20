@@ -2,6 +2,7 @@
 
 import styles from './page.module.css';
 import { getToken } from "@/utils/api";
+import { setCookie } from 'cookies-next';
 
 export default function Login() {
     const handleLogin = () => {
@@ -9,7 +10,7 @@ export default function Login() {
         const password = document.querySelector("input[type='password']").value;
 
         getToken(username, password).then((res) => {
-            localStorage.setItem('token', res.data);
+            setCookie('token', res.data, { maxAge: 60 * 60 * 24 * 30});
             window.location.href = '/musics';
         });
     }

@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react';
-import styles from './player.module.css';
+import styles from './Player.module.css';
 import { setIsPlaying, setMusicVolume, setPlayingMusics, setTimer } from '@/store/playerSlice';
 import Image from 'next/image';
 import pause from '@/lib/icons/pause.svg';

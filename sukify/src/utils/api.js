@@ -1,6 +1,9 @@
-import axios from 'axios';
+'use server'
 
-const token = localStorage.getItem('token');
+import axios from 'axios';
+import { getCookie } from 'cookies-next';
+
+const token = getCookie('token');
 
 export const getToken = (username, password) => {
     return axios.post(`http://localhost:7000/login`, { username, password });
