@@ -1,21 +1,26 @@
 'use client'
 
 import { setCurrentMusic, setIsPlaying, setMusicTime } from "@/store/playerSlice";
-import { useEffect, useRef } from "react";
+import { getMusic } from "@/utils/api";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AudioManager() {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
+    const [ currentMusicID, setCurrentMusicID ] = useState(null);
     const { isPlaying, currentMusic, playingMusics, musicMode, musicVolume, timer } = useSelector((state) => state.player);
 
     useEffect(() => {
         if (!currentMusic.musicID) return;
-        if (audioRef.current.src !== `http://localhost:7000/getMusic/${currentMusic.musicID}`) {
+        if (currentMusicID !== currentMusic.musicID) {
             dispatch(setIsPlaying(false));
-            audioRef.current.src = `http://localhost:7000/getMusic/${currentMusic.musicID}`;
-            audioRef.current.load();
-            audioRef.current.oncanplay = () => dispatch(setIsPlaying(true));
+            getMusic(currentMusic.musicID).then((res) => {
+                audioRef.current.src = URL.createObjectURL(res.data);
+                audioRef.current.load();
+                audioRef.current.oncanplay = () => dispatch(setIsPlaying(true));
+                setCurrentMusicID(currentMusic.musicID);
+            });
         } else {
             dispatch(setIsPlaying(!isPlaying));
         }

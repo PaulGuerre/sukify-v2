@@ -6,6 +6,10 @@ export const getToken = (username, password) => {
     return axios.post(`http://localhost:7000/login`, { username, password });
 }
 
+export const getMusic = (musicID) => {
+    return sendRequest('get', `http://localhost:7000/getMusic/${musicID}`, token, 'blob');
+}
+
 export const getMusics = (limit, offset) => {
     return sendRequest('get', `http://localhost:7000/getMusics?limit=${limit}&offset=${offset}`, token);
 }
@@ -50,10 +54,11 @@ export const createPlaylist = (playlistName) => {
     return sendRequest('post', `http://localhost:7000/createPlaylist?playlistName=${playlistName}`, token);
 }
 
-const sendRequest = (method, url, token) => {
+const sendRequest = (method, url, token, responseType) => {
     return axios({
         method,
         url,
+        responseType,
         headers: {
             'Authorization': `Bearer ${token}`
         }
