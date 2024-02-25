@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db-sukify:
+    image: mariadb:10.3
+    container_name: db-sukify
+    restart: unless-stopped
+    env_file:
+      - ./server/database.env
+    ports:
+      - 3306:3306
+    volumes:
+      - ./server/sukify.sql:/docker-entrypoint-initdb.d/sukify.sql
+    networks:
+      - sukify_network
+
+  api-sukify:
+    depends_on:
+      - "db-sukify"
+    build: server/
+    container_name: api-sukify
+    restart: unless-stopped
+    ports:
+      - "7000:7000"
+    networks:
+      - sukify_network
+
+  sukify:
+    depends_on:
+      - "api-sukify"
+    build: sukify/
+    container_name: sukify
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - sukify_network
+
+networks:
+  sukify_network:

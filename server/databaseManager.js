@@ -5,7 +5,7 @@ const databaseUser = process.env.DATABASE_USER;
 const datanasePassword = process.env.DATABASE_PASSWORD;
 
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: 'db-sukify',
   user: databaseUser,
   password: datanasePassword,
   database: 'sukify'
@@ -29,7 +29,7 @@ const connectDatabase = () => {
  */
 const getUser = (username) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM User WHERE username = '${username}'`;
+    const query = `SELECT * FROM user WHERE username = '${username}'`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -46,7 +46,7 @@ const getUser = (username) => {
  */
 const insertMusic = ({ musicID, musicTitle, musicDuration }) => {
   return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO Music (musicID, musicTitle, musicDuration) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO music (musicID, musicTitle, musicDuration) VALUES (?, ?, ?)';
     const values = [musicID, musicTitle, musicDuration];
 
     connection.query(query, values, (err, results, fields) => {
@@ -64,7 +64,7 @@ const insertMusic = ({ musicID, musicTitle, musicDuration }) => {
  */
 const insertPlaylist = (playlistName) => {
   return new Promise((resolve, reject) => {
-    const query = `INSERT INTO Playlist (name) VALUES ('${playlistName}')`;
+    const query = `INSERT INTO playlist (name) VALUES ('${playlistName}')`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -81,7 +81,7 @@ const insertPlaylist = (playlistName) => {
  */
 const updatePlaylist = ({ playlistID, newName }) => {
   return new Promise((resolve, reject) => {
-    const query = `UPDATE Playlist SET name = '${newName}' WHERE id = ${playlistID}`;
+    const query = `UPDATE playlist SET name = '${newName}' WHERE id = ${playlistID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -98,7 +98,7 @@ const updatePlaylist = ({ playlistID, newName }) => {
  */
 const deletePlaylist = (playlistID) => {
   return new Promise((resolve, reject) => {
-    const query = `DELETE FROM Playlist WHERE id = ${playlistID}`;
+    const query = `DELETE FROM playlist WHERE id = ${playlistID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -115,7 +115,7 @@ const deletePlaylist = (playlistID) => {
  */
 const deleteMusic = (musicID) => {
   return new Promise((resolve, reject) => {
-    const query = `DELETE FROM Music WHERE musicID = '${musicID}'`;
+    const query = `DELETE FROM music WHERE musicID = '${musicID}'`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -132,7 +132,7 @@ const deleteMusic = (musicID) => {
  */
 const updateMusic = ({ musicID, musicTitle }) => {
   return new Promise((resolve, reject) => {
-    const query = `UPDATE Music SET musicTitle = '${musicTitle}' WHERE id = ${musicID}`;
+    const query = `UPDATE music SET musicTitle = '${musicTitle}' WHERE id = ${musicID}`;
     
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -149,7 +149,7 @@ const updateMusic = ({ musicID, musicTitle }) => {
  */
 const insertPlaylistMusic = ({ playlistID, musicID }) => {
   return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO Playlistmusics (playlistID, musicID) VALUES (?, ?)';
+    const query = 'INSERT INTO playlistmusics (playlistID, musicID) VALUES (?, ?)';
     const values = [ playlistID, musicID ];
 
     connection.query(query, values, (err, results, fields) => {
@@ -167,7 +167,7 @@ const insertPlaylistMusic = ({ playlistID, musicID }) => {
  */
 const getMusics = ({ limit, offset }) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM Music LIMIT ${limit} OFFSET ${offset}`;
+    const query = `SELECT * FROM music LIMIT ${limit} OFFSET ${offset}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -184,7 +184,7 @@ const getMusics = ({ limit, offset }) => {
  */
 const getPlaylists = () => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT COUNT(PlaylistMusics.musicID) AS MusicCount, Playlist.* FROM Playlist LEFT JOIN PlaylistMusics ON Playlist.id = PlaylistMusics.playlistID GROUP BY Playlist.id`;
+    const query = `SELECT COUNT(playlistmusics.musicID) AS MusicCount, playlist.* FROM playlist LEFT JOIN playlistmusics ON playlist.id = playlistmusics.playlistID GROUP BY playlist.id`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -201,7 +201,7 @@ const getPlaylists = () => {
  */
 const getPlaylist = (playlistID) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM Playlist WHERE id = ${playlistID}`;
+    const query = `SELECT * FROM playlist WHERE id = ${playlistID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -218,7 +218,7 @@ const getPlaylist = (playlistID) => {
  */
 const getPlaylistMusics = ({ playlistID, limit, offset }) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT music.id, music.musicID, music.musicTitle, music.musicDuration FROM Music INNER JOIN PlaylistMusics ON Music.id = PlaylistMusics.musicID WHERE PlaylistMusics.playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
+    const query = `SELECT music.id, music.musicID, music.musicTitle, music.musicDuration FROM music INNER JOIN playlistmusics ON music.id = playlistmusics.musicID WHERE playlistmusics.playlistID = ${playlistID} LIMIT ${limit} OFFSET ${offset}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {
@@ -235,7 +235,7 @@ const getPlaylistMusics = ({ playlistID, limit, offset }) => {
  */
 const deletePlaylistMusic = ({ playlistID, musicID }) => {
   return new Promise((resolve, reject) => {
-    const query = `DELETE FROM Playlistmusics WHERE playlistID = ${playlistID} AND musicID = ${musicID}`;
+    const query = `DELETE FROM playlistmusics WHERE playlistID = ${playlistID} AND musicID = ${musicID}`;
 
     connection.query(query, (err, results, fields) => {
       if (err) {

@@ -16,7 +16,17 @@ const port = 7000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDatabase();
+// connect database and retry if it fails
+const connectDatabaseWithRetry = () => {
+    connectDatabase()
+        .then(() => {
+            console.log('Database connected');
+        })
+        .catch((err) => {
+            console.error('Error while connecting to the database:', err);
+            setTimeout(connectDatabaseWithRetry, 5000);
+        });
+};
 
 /**
  * CORS
