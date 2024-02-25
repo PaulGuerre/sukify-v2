@@ -17,7 +17,8 @@ export default function PlaylistList() {
 
   return (
     isLoading ? <Loader /> : <div className={styles.playlists}>
-      { playlists.length ? (<>{ playlists.map((playlist) => <Playlist key={playlist.id} playlist={playlist} /> )} <AddPlaylist /></>) : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> }
+      { playlists.map((playlist) => <Playlist key={playlist.id} playlist={playlist} /> )} 
+      <AddPlaylist />
     </div>
   );
 }
