@@ -19,7 +19,7 @@ export default function Header() {
 
     const handleLogOut = () => {
         deleteCookie('token');
-        window.location.href = '/';
+        window.location.href = '/login';
     };
 
     const isMobile = () => {
