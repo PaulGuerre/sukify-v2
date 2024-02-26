@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-require('dotenv').config({ path: 'credentials.env' });
+require('dotenv').config({ path: process.env.ENV_FILE === 'docker' ? '.env.docker' : '.env.local' });
 const databaseUser = process.env.DATABASE_USER;
 const datanasePassword = process.env.DATABASE_PASSWORD;
 

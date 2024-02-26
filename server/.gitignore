@@ -31,8 +31,9 @@ yarn-error.log*
 next-env.d.ts
 
 # credentials
-credentials.env
-database.env
+.env.local
+.env.docker
+.env.database
 
 # data
 data/

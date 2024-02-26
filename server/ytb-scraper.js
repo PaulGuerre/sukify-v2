@@ -4,7 +4,7 @@ const ffprobePath = require('ffprobe-static').path;
 const { google } = require('googleapis');
 
 ffmpeg.setFfprobePath(ffprobePath);
-require('dotenv').config({ path: 'credentials.env' });
+require('dotenv').config({ path: process.env.ENV_FILE === 'docker' ? '.env.docker' : '.env.local' });
 const youtubeApiKey = process.env.YOUTUBE_API_KEY;
 const musicsFolder = process.env.MUSICS_FOLDER;
 

@@ -6,7 +6,7 @@ services:
     container_name: db-sukify
     restart: unless-stopped
     env_file:
-      - ./server/database.env
+      - ./server/.env.database
     ports:
       - 3306:3306
     volumes:
@@ -22,6 +22,8 @@ services:
     restart: unless-stopped
     ports:
       - "7000:7000"
+    environment:
+      ENV_FILE: docker
     networks:
       - sukify_network
 

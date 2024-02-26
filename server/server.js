@@ -4,7 +4,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-require('dotenv').config({ path: 'credentials.env' });
+require('dotenv').config({ path: process.env.ENV_FILE === 'docker' ? '.env.docker' : '.env.local' });
 const musicsFolder = process.env.MUSICS_FOLDER; 
 
 const { downloadMP3, searchVideoByName, getMusicDuration } = require('./ytb-scraper');
