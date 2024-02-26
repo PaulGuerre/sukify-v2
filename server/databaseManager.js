@@ -2,12 +2,13 @@ const mysql = require('mysql');
 
 require('dotenv').config({ path: process.env.ENV_FILE === 'docker' ? '.env.docker' : '.env.local' });
 const databaseUser = process.env.DATABASE_USER;
-const datanasePassword = process.env.DATABASE_PASSWORD;
+const databasePassword = process.env.DATABASE_PASSWORD;
+const databaseHost = process.env.DATABASE_HOST;
 
 const connection = mysql.createConnection({
-  host: 'db-sukify',
+  host: databaseHost,
   user: databaseUser,
-  password: datanasePassword,
+  password: databasePassword,
   database: 'sukify'
 });
 
