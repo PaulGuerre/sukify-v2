@@ -9,6 +9,7 @@ import menu_color from '@/lib/icons/menu_color.svg';
 import logout from '@/lib/icons/logout.svg';
 import logoutGrey from '@/lib/icons/logout_grey.svg';
 import Image from 'next/image';
+import { deleteCookie } from 'cookies-next';
 
 export default function Header() {
     const dispatch = useDispatch();
@@ -16,6 +17,10 @@ export default function Header() {
     const [ isVisible, setIsVisible ] = useState(false);
     const [ isHovered, setIsHovered ] = useState(false);
 
+    const handleLogOut = () => {
+        deleteCookie('token');
+        window.location.href = '/';
+    };
 
     const isMobile = () => {
         if (typeof window === 'undefined') return false;
@@ -50,7 +55,7 @@ export default function Header() {
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
                 <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} key={playlist.id}>{playlist.name}</Link>))}</div>
-                <div className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
+                <div onClick={handleLogOut} className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
             </div>
         </div>
     );
