@@ -6,13 +6,16 @@ import { setPlaylists } from '@/store/playlistsSlice';
 import { getPlaylists } from '@/utils/api';
 import menu from '@/lib/icons/menu.svg';
 import menu_color from '@/lib/icons/menu_color.svg';
+import logout from '@/lib/icons/logout.svg';
+import logoutGrey from '@/lib/icons/logout_grey.svg';
 import Image from 'next/image';
 
 export default function Header() {
     const dispatch = useDispatch();
     const playlists = useSelector((state) => state.playlists.playlists);
-    const [ isLoading, setIsLoading ] = useState(true);
     const [ isVisible, setIsVisible ] = useState(false);
+    const [ isHovered, setIsHovered ] = useState(false);
+
 
     const isMobile = () => {
         if (typeof window === 'undefined') return false;
@@ -30,7 +33,6 @@ export default function Header() {
     }, [isVisible]);
 
     useEffect(() => {
-        setIsLoading(false);
         getPlaylists().then((res) => {
             dispatch(setPlaylists(res.data));
         });
@@ -48,6 +50,7 @@ export default function Header() {
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
                 <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} key={playlist.id}>{playlist.name}</Link>))}</div>
+                <div className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
             </div>
         </div>
     );
