@@ -66,7 +66,7 @@ app.post('/login', (req, res) => {
 
     if (!username || !password) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     getUser(username).then((user) => {
@@ -78,15 +78,15 @@ app.post('/login', (req, res) => {
                     return res.status(200).send(token);
                 }
                 console.log('Invalid password');
-                res.status(500).send('Invalid password');
+                res.status(400).send('Invalid password');
             });
         } else {
             console.log('User does not exist');
-            res.status(500).send('User does not exist');
+            res.status(400).send('User does not exist');
         }
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while logging in');
+        res.status(400).send('Error while logging in');
     });
 });
 
@@ -98,7 +98,7 @@ app.post('/download', checkToken, (req, res) => {
 
     if (!videoName) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     searchVideoByName(videoName).then(({ videoID, videoTitle }) => {
@@ -113,16 +113,16 @@ app.post('/download', checkToken, (req, res) => {
                     res.status(200).send('Video downloaded as MP3 successfully');
                 }).catch((err) => {
                     console.log('Error: ' + err);
-                    res.status(500).send('Video already downloaded');
+                    res.status(400).send('Video already downloaded');
                 });
             });
         }).catch((err) => {
             console.log('Error: ' + err);
-            res.status(500).send('Error while downloading the music');
+            res.status(400).send('Error while downloading the music');
         });
     }).catch((err) => {
         console.log('Error: ' + err);
-        res.status(500).send('Error while searching the music');
+        res.status(400).send('Error while searching the music');
     });
 });
 
@@ -134,15 +134,15 @@ app.post('/createPlaylist', checkToken, (req, res) => {
 
     if (!playlistName) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     insertPlaylist(playlistName).then(() => {
         console.log('Playlist successfully created');
-        res.status(200).send("Playlist successfully creayed");
+        res.status(200).send("Playlist successfully created");
     }).catch((err) => {
         console.log('Error: ' + err);
-        res.status(500).send('Error while creating playlist');
+        res.status(400).send('Error while creating playlist');
     });
 });
 
@@ -154,7 +154,7 @@ app.put('/updatePlaylist/:playlistID', checkToken, (req, res) => {
 
     if (!newPlaylist.newName) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     updatePlaylist(newPlaylist).then((results) => {
@@ -163,10 +163,10 @@ app.put('/updatePlaylist/:playlistID', checkToken, (req, res) => {
             return res.status(200).send('Playlist updated successfully');
         }
         console.log('The playlist does not exist');
-        res.status(500).send('The playlist does not exist');
+        res.status(400).send('The playlist does not exist');
     }).catch((err) => {
         console.log('Error:' + err);
-        res.status(500).send('Error while updating playlist');
+        res.status(400).send('Error while updating playlist');
     });
 });
 
@@ -182,10 +182,10 @@ app.delete('/deletePlaylist/:playlistID', checkToken, (req, res) => {
             return res.status(200).send('Playlist successfully deleted');
         }
         console.log('The playlist does not exist');
-        res.status(500).send('The playlist does not exist');
+        res.status(400).send('The playlist does not exist');
     }).catch((err) => {
         console.log('Error :' + err);
-        res.status(500).send('Error while deleting playlist');
+        res.status(400).send('Error while deleting playlist');
     });
 });
 
@@ -200,7 +200,7 @@ app.delete('/deleteMusic/:musicID', checkToken, (req, res) => {
             fs.unlink(musicsFolder + musicID + '.mp3', (err) => {
                 if (err) {
                     console.log('Error :' + err);
-                    return res.status(500).send('Error while deleting music');
+                    return res.status(400).send('Error while deleting music');
                 }
                 console.log('Music successfully deleted');
                 return res.status(200).send('Music successfully deleted');
@@ -212,7 +212,7 @@ app.delete('/deleteMusic/:musicID', checkToken, (req, res) => {
     })
     .catch((err) => {
         console.log('Error :' + err);
-        res.status(500).send('Error while deleting music');
+        res.status(400).send('Error while deleting music');
     });
 });
 
@@ -224,7 +224,7 @@ app.put('/updateMusic/:musicID', checkToken, (req, res) => {
 
     if (!music.musicTitle) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     updateMusic(music).then((results) => {
@@ -233,10 +233,10 @@ app.put('/updateMusic/:musicID', checkToken, (req, res) => {
             return res.status(200).send('Music updated successfully');
         }
         console.log('The music does not exist');
-        res.status(500).send('The music does not exist');
+        res.status(400).send('The music does not exist');
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while updating music');
+        res.status(400).send('Error while updating music');
     });
 });
 
@@ -251,7 +251,7 @@ app.post('/addPlaylist/:playlistID/music/:musicID', checkToken, (req, res) => {
         res.status(200).send('Music successfully added to playlist');
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while adding music to playlist');
+        res.status(400).send('Error while adding music to playlist');
     });
 });
 
@@ -263,7 +263,7 @@ app.get('/getMusics', checkToken, (req, res) => {
 
     if (!range.limit || !range.offset) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     getMusics(range).then((results) => {
@@ -271,7 +271,7 @@ app.get('/getMusics', checkToken, (req, res) => {
         res.status(200).send(results);
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while retrieving the musics');
+        res.status(400).send('Error while retrieving the musics');
     });
 });
 
@@ -283,7 +283,7 @@ app.get('/getMusic/:musicID', checkToken, (req, res) => {
 
     if (!fs.existsSync(musicsFolder + musicID + '.mp3')) {
         console.log('Error : the music does not exist');
-        return res.status(500).send('The music does not exist');
+        return res.status(400).send('The music does not exist');
     }
 
     console.log('Music retrieved');
@@ -299,7 +299,7 @@ app.get('/getPlaylists', checkToken, (req, res) => {
         res.status(200).send(results);
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while retrieving the playlists');
+        res.status(400).send('Error while retrieving the playlists');
     });
 });
 
@@ -314,7 +314,7 @@ app.get('/getPlaylist/:playlistID', checkToken, (req, res) => {
         res.status(200).send(results);
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while retrieving the playlist');
+        res.status(400).send('Error while retrieving the playlist');
     });
 });
 
@@ -326,7 +326,7 @@ app.get('/getPlaylistMusics/:playlistID', checkToken, (req, res) => {
 
     if (!data.limit || !data.offset) {
         console.log('Error : missing parameters');
-        return res.status(500).send('Missing parameters');
+        return res.status(400).send('Missing parameters');
     }
 
     getPlaylistMusics(data).then((results) => {
@@ -334,7 +334,7 @@ app.get('/getPlaylistMusics/:playlistID', checkToken, (req, res) => {
         res.status(200).send(results);
     }).catch((err) => {
         console.log('Error : ' + err);
-        res.status(500).send('Error while retrieving the playlist musics');
+        res.status(400).send('Error while retrieving the playlist musics');
     });
 });
 
@@ -353,7 +353,7 @@ app.delete('/deletePlaylist/:playlistID/music/:musicID', checkToken, (req, res) 
         res.status(200).send('The music or the playlist does not exist');
     }).catch((err) => {
         console.log('Error :' + err);
-        res.status(500).send('Error while deleting music from playlist');
+        res.status(400).send('Error while deleting music from playlist');
     });
 });
 

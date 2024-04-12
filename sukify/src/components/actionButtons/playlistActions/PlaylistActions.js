@@ -11,6 +11,7 @@ import { setPlaylists } from '@/store/playlistsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { setCurrentMusic, setIsPlaying } from '@/store/playerSlice';
+import { setLog } from '@/store/apiSlice';
 
 export default function PlaylistActions() {
     const router = useRouter();
@@ -34,7 +35,9 @@ export default function PlaylistActions() {
                     playlistNewName.className += ` ${styles.inputAlertInvalid}`;
                     return;
                 }
-                updatePlaylist(playlistID, playlistNewName.value).then(() => {
+                updatePlaylist(playlistID, playlistNewName.value).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     if (currentMusic.playlistID === playlistID) {
                         dispatch(setCurrentMusic({ ...currentMusic, playlistName: playlistNewName.value }));
@@ -58,7 +61,9 @@ export default function PlaylistActions() {
     const removePlaylist = () => {
         const data = {
             firstAction: () => {
-                deletePlaylist(playlistID).then(() => {
+                deletePlaylist(playlistID).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { 
                         dispatch(setPlaylists(res.data));
                         router.push('/playlists');

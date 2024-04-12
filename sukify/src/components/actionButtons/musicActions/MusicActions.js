@@ -50,7 +50,7 @@ export default function MusicActions({ musicID }) {
                     return;
                 }
                 updateMusic(musicID, newMusicName.value).then((res) => {
-                    res.status === 200 ? dispatch(setLog({ message: res.data, status: res.status })) : dispatch(setLog({ message: res.data, status: res.status }));
+                    dispatch(setLog({ message: res.data, status: res.status }));
                     if (res.status !== 200) return;
                     playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
                     currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
@@ -72,7 +72,9 @@ export default function MusicActions({ musicID }) {
     const removeMusicFromPlaylist = () => {
         const data = {
             firstAction: () => {
-                deleteMusicFromPlaylist(playlistID, musicID).then(() => {
+                deleteMusicFromPlaylist(playlistID, musicID).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     getPlaylistMusics(playlistID, 1000, 0).then((res) => {
                         updateMusics(res);
@@ -98,7 +100,9 @@ export default function MusicActions({ musicID }) {
     const removeMusic = () => {        
         const data = {
             firstAction: () => {
-                deleteMusic(musicVideoID).then(() => {
+                deleteMusic(musicVideoID).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     getMusics(1000, 0).then((res) => { updateMusics(res); });
                     currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
@@ -123,7 +127,9 @@ export default function MusicActions({ musicID }) {
         const data = {
             firstAction: () => {
                 const chosenPlaylist = document.getElementById('playlistChosen').value;
-                addMusicToPlaylist(chosenPlaylist, musicID).then(() => {
+                addMusicToPlaylist(chosenPlaylist, musicID).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                     chosenPlaylist === currentMusic.playlistID && getPlaylistMusics(chosenPlaylist, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); })
                 });

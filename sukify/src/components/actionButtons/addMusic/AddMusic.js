@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import Loader from '@/components/loader/Loader';
 import { setPlayingMusics } from '@/store/playerSlice';
+import { setLog } from '@/store/apiSlice';
 
 export default function AddMusic() {
     const dispatch = useDispatch();
@@ -31,7 +32,12 @@ export default function AddMusic() {
                     return;
                 }
                 setIsLoading(true);
-                downloadMusic(musicName.value).then(() => {
+                downloadMusic(musicName.value).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) { 
+                        setIsLoading(false);
+                        return; 
+                    }
                     setIsLoading(false);
                     getMusics(1000, 0).then((res) => { 
                         dispatch(setMusics(res.data)); 

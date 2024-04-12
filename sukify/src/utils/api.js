@@ -24,11 +24,19 @@ export const getPlaylistMusics = (playlistID, limit, offset) => {
 }
 
 export const updatePlaylist = (playlistID, newName) => {
-    return sendRequest('put', `http://localhost:7000/updatePlaylist/${playlistID}?newName=${newName}`, token);
+    return sendRequest('put', `http://localhost:7000/updatePlaylist/${playlistID}?newName=${newName}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while renaming the playlist', status: 400 };
+    });
 }
 
 export const deletePlaylist = (playlistID) => {
-    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}`, token);
+    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while deleting the playlist', status: 400 };
+    });
 }
 
 export const updateMusic = (musicID, newName) => {
@@ -40,23 +48,43 @@ export const updateMusic = (musicID, newName) => {
 }
 
 export const deleteMusic = (musicID) => {
-    return sendRequest('delete', `http://localhost:7000/deleteMusic/${musicID}`, token);
+    return sendRequest('delete', `http://localhost:7000/deleteMusic/${musicID}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while deleting the music', status: 400 };
+    });
 }
 
 export const deleteMusicFromPlaylist = (playlistID, musicID) => {
-    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`, token);
+    return sendRequest('delete', `http://localhost:7000/deletePlaylist/${playlistID}/music/${musicID}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while deleting the music from the playlist', status: 400 };
+    });
 }
 
 export const addMusicToPlaylist = (playlistID, musicID) => {
-    return sendRequest('post', `http://localhost:7000/addPlaylist/${playlistID}/music/${musicID}`, token);
+    return sendRequest('post', `http://localhost:7000/addPlaylist/${playlistID}/music/${musicID}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while adding the music to the playlist', status: 400 };
+    });
 }
 
 export const downloadMusic = (musicTitle) => {
-    return sendRequest('post', `http://localhost:7000/download?videoName=${musicTitle}`, token);
+    return sendRequest('post', `http://localhost:7000/download?videoName=${musicTitle}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while downloading the music', status: 400 };
+    });
 }
 
 export const createPlaylist = (playlistName) => {
-    return sendRequest('post', `http://localhost:7000/createPlaylist?playlistName=${playlistName}`, token);
+    return sendRequest('post', `http://localhost:7000/createPlaylist?playlistName=${playlistName}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while creating the playlist', status: 400 };
+    });
 }
 
 const sendRequest = (method, url, token, responseType) => {

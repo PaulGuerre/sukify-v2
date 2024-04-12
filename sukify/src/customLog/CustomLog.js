@@ -21,7 +21,7 @@ export default function CustomLog() {
     }, [log]);
 
     return (
-        isVisible ? <div className={`${styles.alert} ${log.status !== 200 ? styles.error : ''}`}>
+        isVisible ? <div className={styles.alert}>
             <p className={styles.log}>{log.message}</p>
         </div> : null
     )

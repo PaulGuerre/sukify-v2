@@ -6,6 +6,7 @@ import CustomAlert from '@/components/customAlert/CustomAlert';
 import { createPlaylist, getPlaylists } from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import { setPlaylists } from '@/store/playlistsSlice';
+import { setLog } from '@/store/apiSlice';
 
 export default function AddPlaylist() {
     const dispatch = useDispatch();
@@ -23,7 +24,9 @@ export default function AddPlaylist() {
                     playlistName.className += ` ${styles.inputAlertInvalid}`;
                     return;
                 }
-                createPlaylist(playlistName.value).then(() => {
+                createPlaylist(playlistName.value).then((res) => {
+                    dispatch(setLog({ message: res.data, status: res.status }));
+                    if (res.status !== 200) return;
                     getPlaylists().then((res) => { dispatch(setPlaylists(res.data)); });
                 });
                 setShowAlert(false);
