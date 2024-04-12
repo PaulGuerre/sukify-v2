@@ -59,9 +59,9 @@ export default function Player() {
                     <Image onClick={playNext} src={next} alt="next icon" />
                 </div>
                 <div className={styles.time}>
-                    <p>{ musicTime.currentTime ? formatTime(musicTime.currentTime) : '' }</p>
+                    <p>{ musicTime.currentTime ? formatTime(musicTime.currentTime) : '0:00' }</p>
                     <input type="range" min="0" max="100" step="0.01" value={musicTime.timePercentage || 0} onChange={(e) => dispatch(setTimer(e.target.value))} />
-                    <p>{ musicTime.duration ? formatTime(musicTime.duration) : '' }</p>
+                    <p>{ musicTime.duration ? formatTime(musicTime.duration) : '0:00' }</p>
                 </div>
             </div>
             <div className={styles.third}>

@@ -55,7 +55,10 @@ export default function Header() {
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
                 <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.playlist} key={playlist.id}>{playlist.name}</Link>))}</div>
-                <div onClick={handleLogOut} className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
+                <div className={styles.actions}>
+                    <div onClick={handleLogOut} className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
+                    <p className={styles.mention}>2024 - Sukine Corporation</p>
+                </div>
             </div>
         </div>
     );

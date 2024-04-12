@@ -47,9 +47,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    background: linear-gradient(45deg, #FF1744, #FFD600);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #46474a;
 }
 
 .musicDuration {
