@@ -8,6 +8,7 @@ import { setCurrentMusics, setMusics } from '@/store/musicsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaylists } from '@/store/playlistsSlice';
 import { setCurrentMusic, setIsPlaying, setPlayingMusics } from '@/store/playerSlice';
+import { setLog } from '@/store/apiSlice';
 
 export default function MusicActions({ musicID }) {
     const dispatch = useDispatch();
@@ -48,7 +49,9 @@ export default function MusicActions({ musicID }) {
                    newMusicName.className += ` ${styles.inputAlertInvalid}`;
                     return;
                 }
-                updateMusic(musicID, newMusicName.value).then(() => {
+                updateMusic(musicID, newMusicName.value).then((res) => {
+                    if (res.status !== 200) return;
+                    dispatch(setLog(res.data));
                     playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
                     currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
                     currentMusic.id === musicID && updateCurrentMusic({ ...currentMusic, musicTitle: newMusicName.value });

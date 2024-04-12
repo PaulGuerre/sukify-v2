@@ -1,0 +1,17 @@
+.alert {
+    background-color: #46474a;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 25px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.log {
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #FF1744, #FFD600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;;
+}
