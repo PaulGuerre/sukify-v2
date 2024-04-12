@@ -43,7 +43,7 @@ export default function AddPlaylist() {
     return (
         <>
             { showAlert && <CustomAlert data={alertData} showAlert={showAlert} /> }
-            <div className={`${styles.main} ${styles[`cover-${Math.floor(Math.random() * 4) + 1}`]}`} onClick={addPlaylist}>
+            <div className={styles.main} onClick={addPlaylist}>
                 <Image src={plusWhite} alt="Plus icon" />
             </div>
         </>

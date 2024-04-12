@@ -10,8 +10,10 @@ function Playlists() {
   return (
     <div className={styles.playlists}>
       <Header />
-      <PlaylistList />
-      <Player />
+      <div className={styles.main}>
+        <PlaylistList />
+        <Player />
+      </div>
     </div>
   );
 }

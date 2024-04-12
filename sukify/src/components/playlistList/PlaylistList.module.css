@@ -1,12 +1,12 @@
 .playlists {
     width: 100%;
-    height: calc(100% - 70px);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
     overflow-y: scroll;
+    height: 100%;
 }
 
 .playlists::-webkit-scrollbar {

@@ -5,4 +5,5 @@ html, body {
   padding: 0;
   display: flex;
   flex-direction: row;
+  background-color: #46474a;
 }

@@ -18,7 +18,7 @@ export default function Playlist({ playlist }) {
     };
 
     return (
-        <Link href={`/playlists/${playlist.id}`} className={`${styles.playlist} ${styles[`cover-${Math.floor(Math.random() * 4) + 1}`]}`}>
+        <Link href={`/playlists/${playlist.id}`} className={styles.playlist}>
             <div className={styles.playlistName}>{playlist.name}</div>
             <div className={styles.play} onClick={handlePlayClick}>
                 <Image src={play} alt="play icon" />

@@ -21,10 +21,10 @@ export default function MusicList({ title = 'Musics', isPlaylist = false }) {
         <div className={styles.musics}>
             <MusicListHeader title={title} musicCount={musics.length} isPlaylist={isPlaylist} />
             { 
-                currentMusics.length ? <>
-                    {currentMusics.map((music) => <Music key={music.id} music={music} /> )}
+                currentMusics.length ? <div className={styles.main}>
+                    <div className={styles.musicList}>{currentMusics.map((music) => <Music key={music.id} music={music} /> )}</div>
                     <Pagination />
-                </> : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> 
+                </div> : <div className={styles.empty}><Image src={sad} alt="Sad emoji icon" /></div> 
             }
         </div>
     );

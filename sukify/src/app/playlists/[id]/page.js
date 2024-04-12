@@ -31,8 +31,10 @@ function Playlist({ params }) {
   return (
     <div className={styles.playlist}>
       <Header />
-      <MusicList title={playlistName} isPlaylist={true} />
-      <Player />
+      <div className={styles.main}>
+        <MusicList title={playlistName} isPlaylist={true} />
+        <Player />
+      </div>
     </div>
   )
 }

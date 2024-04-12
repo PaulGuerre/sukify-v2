@@ -14,15 +14,14 @@
 .main {
     width: 100%;
     max-width: 400px;
-    background-color: white;
     border-radius: 8px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    border: 1px solid #E0E0E0;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     text-align: center;
+    background-color: #46474a;
 }
 
 .actions {
@@ -33,18 +32,18 @@
 }
 
 .action {
-    width: 70px;
     padding: 8px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     font-size: 16px;
-    background-color: #00B0FF;
     color: white;
+    font-weight: bold;
+    background-color: #56585d;
 }
 
 .action:hover {
-    background-color: #0091EA;
+    background-color: #404145;
 }
 
 @media (max-width: 500px) {

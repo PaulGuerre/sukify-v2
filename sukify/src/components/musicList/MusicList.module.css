@@ -1,11 +1,24 @@
 .musics {
     width: 100%;
-    height: calc(100% - 70px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: scroll;
     scrollbar-width: none;
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.musicList {
+    width: 100%;
 }
 
 .musics::-webkit-scrollbar {

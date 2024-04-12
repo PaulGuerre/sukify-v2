@@ -54,7 +54,7 @@ export default function Header() {
                 <Link href="/playlists" className={styles.link}>Playlists</Link>
                 <hr className={styles.separator} />
                 <p className={styles.title}>Your music</p>
-                <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.link} key={playlist.id}>{playlist.name}</Link>))}</div>
+                <div className={styles.list}>{playlists.map((playlist) => (<Link href={`/playlists/${playlist.id}`} className={styles.playlist} key={playlist.id}>{playlist.name}</Link>))}</div>
                 <div onClick={handleLogOut} className={styles.logout}><Image onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} src={isHovered ? logoutGrey : logout} alt="menu icon" /></div>
             </div>
         </div>

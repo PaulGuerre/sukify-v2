@@ -10,6 +10,7 @@
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     text-decoration: none;
+    background-color: #46474a;
 }
 
 .play {
@@ -25,11 +26,13 @@
     width: 100%;
     font-size: 24px;
     font-weight: bold;
-    color: white;
     margin: 8px 0 0 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;    
+    background: linear-gradient(45deg, #FF1744, #FFD600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .playlistLength {
@@ -48,22 +51,6 @@
     opacity: 1;   
     transition: opacity 0.2s ease-in-out;
 }
-
-.cover-1 {
-    background: linear-gradient(45deg, #00E676, #00B0FF);
-}
-
-.cover-2 {
-    background: linear-gradient(45deg, #00B0FF, #FF1744);
-}
-
-.cover-3 {
-    background: linear-gradient(45deg, #FF1744, #FFD600);
-}
-
-.cover-4 {
-    background: linear-gradient(45deg, #FFD600, #00E676);
-}   
 
 @media (max-width: 768px) {
     .playlist {

@@ -11,6 +11,7 @@
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     text-decoration: none;
     cursor: pointer;
+    background-color: #46474a;
 }
 
 .main img {
@@ -29,9 +30,15 @@
     width: 70%;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid #00B0FF;
     font-size: 16px;
     margin: 8px;
+    border: none;
+    background-color: #56585d;
+    color: white;
+}
+
+.inputAlert:focus {
+    outline: none;
 }
 
 .inputAlertInvalid {
@@ -41,23 +48,10 @@
 .textAlert {
     font-size: 16px;
     font-weight: bold;
-}
-
-.cover-1 {
-    background: linear-gradient(45deg, #00E676, #00B0FF);
-}
-
-.cover-2 {
-    background: linear-gradient(45deg, #00B0FF, #FF1744);
-}
-
-.cover-3 {
     background: linear-gradient(45deg, #FF1744, #FFD600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-
-.cover-4 {
-    background: linear-gradient(45deg, #FFD600, #00E676);
-}   
 
 @media (max-width: 768px) {
     .main {

@@ -25,8 +25,10 @@ function Musics() {
   return (
     <div className={styles.musics}>
       <Header />
-      <MusicList />
-      <Player />
+      <div className={styles.main}>
+        <MusicList />
+        <Player />
+      </div>
     </div>
   );
 }

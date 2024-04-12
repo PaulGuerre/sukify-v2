@@ -7,7 +7,6 @@
 }
 
 .paginationButton {
-    background-color: #00B0FF;
     color: white;
     padding: 8px 16px;
     cursor: pointer;
@@ -15,10 +14,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #46474a;
 }
 
 .paginationButton:hover {
-    background-color: #0091EA;
+    background-color: #404145;
 }
 
 .paginationButton > img {
