@@ -32,7 +32,11 @@ export const deletePlaylist = (playlistID) => {
 }
 
 export const updateMusic = (musicID, newName) => {
-    return sendRequest('put', `http://localhost:7000/updateMusic/${musicID}?newName=${newName}`, token);
+    return sendRequest('put', `http://localhost:7000/updateMusic/${musicID}?newName=${newName}`, token).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while renaming the music', status: 400 };
+    });
 }
 
 export const deleteMusic = (musicID) => {

@@ -11,18 +11,18 @@ export default function CustomLog() {
     const log = useSelector((state) => state.api.log);
 
     useEffect(() => {
-        if (log !== '') {
+        if (log.message) {
             setIsVisible(true);
             setTimeout(() => {
-                dispatch(setLog(''));
+                dispatch(setLog({}));
                 setIsVisible(false);
             }, 5000);
         }
     }, [log]);
 
     return (
-        isVisible ? <div className={styles.alert}>
-            <p className={styles.log}>{log}</p>
+        isVisible ? <div className={`${styles.alert} ${log.status !== 200 ? styles.error : ''}`}>
+            <p className={styles.log}>{log.message}</p>
         </div> : null
     )
 }

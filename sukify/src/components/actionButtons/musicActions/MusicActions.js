@@ -50,8 +50,8 @@ export default function MusicActions({ musicID }) {
                     return;
                 }
                 updateMusic(musicID, newMusicName.value).then((res) => {
+                    res.status === 200 ? dispatch(setLog({ message: res.data, status: res.status })) : dispatch(setLog({ message: res.data, status: res.status }));
                     if (res.status !== 200) return;
-                    dispatch(setLog(res.data));
                     playlistID ? getPlaylistMusics(playlistID, 1000, 0).then((res) => { updateMusics(res); }) : getMusics(1000, 0).then((res) => { updateMusics(res); });
                     currentMusic.playlistID ? getPlaylistMusics(currentMusic.playlistID, 1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); }) : getMusics(1000, 0).then((res) => { dispatch(setPlayingMusics(res.data)); });
                     currentMusic.id === musicID && updateCurrentMusic({ ...currentMusic, musicTitle: newMusicName.value });

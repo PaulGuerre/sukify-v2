@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    log: "", // log message
+    log: {}, // log message
 }
 
 export const apiSlice = createSlice({
