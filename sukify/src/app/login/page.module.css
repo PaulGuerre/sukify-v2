@@ -13,9 +13,10 @@
     padding: 8px;
     border-radius: 8px;
     font-size: 16px;
-    border: none;
+    border: 1px solid transparent;
     background-color: #56585d;
     color: white;
+    transition: 0.5s;
 }
 
 .login input:focus {
@@ -38,4 +39,9 @@
 .validate:hover {
     transition: 0.5s;
     background-color: #404145;
+}
+
+.fail input {
+    border: 1px solid red;
+    transition: 0.5s;
 }

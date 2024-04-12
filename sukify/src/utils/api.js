@@ -4,7 +4,11 @@ import { getCookie } from 'cookies-next';
 const token = getCookie('token');
 
 export const getToken = (username, password) => {
-    return axios.post(`http://localhost:7000/login`, { username, password });
+    return axios.post(`http://localhost:7000/login`, { username, password }).then((res) => {
+        return res;
+    }).catch((error) => {
+        return { data: 'Error while logging in', status: 400 };
+    });
 }
 
 export const getMusic = (musicID) => {
