@@ -3,6 +3,8 @@
 import styles from './page.module.css';
 import { getToken } from "@/utils/api";
 import { setCookie } from 'cookies-next';
+import Image from 'next/image';
+import sukify from '@/lib/img/sukify.png';
 
 export default function Login() {
     const handleLogin = () => {
@@ -17,6 +19,7 @@ export default function Login() {
 
     return (
         <div className={styles.login}>
+            <Image src={sukify} alt='Sukify logo' width={250} />
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
             <button className={styles.validate} onClick={handleLogin}>Login</button>

@@ -32,9 +32,11 @@
     background-color: transparent;
     padding: 12px;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 .menuAction:hover {
+    transition: 0.5s;
     color: #ABABAB;
 }
 

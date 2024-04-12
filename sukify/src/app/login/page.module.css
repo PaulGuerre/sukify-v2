@@ -12,8 +12,14 @@
     width: 300px;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid #00B0FF;
     font-size: 16px;
+    border: none;
+    background-color: #56585d;
+    color: white;
+}
+
+.login input:focus {
+    outline: none;
 }
 
 .validate {
@@ -21,14 +27,15 @@
     height: 35px;
     border-radius: 8px;
     border: none;
-    background-color: #00B0FF;
     color: #fff;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.5s;
+    background-color: #56585d;
 }
 
 .validate:hover {
-    background-color: #0077cc;
     transition: 0.5s;
+    background-color: #404145;
 }

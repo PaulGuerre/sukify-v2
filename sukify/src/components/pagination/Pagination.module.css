@@ -15,9 +15,11 @@
     align-items: center;
     justify-content: center;
     background-color: #46474a;
+    transition: 0.5s;
 }
 
 .paginationButton:hover {
+    transition: 0.5s;
     background-color: #404145;
 }
 

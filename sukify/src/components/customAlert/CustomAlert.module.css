@@ -40,9 +40,11 @@
     color: white;
     font-weight: bold;
     background-color: #56585d;
+    transition: 0.5s;
 }
 
 .action:hover {
+    transition: 0.5s;
     background-color: #404145;
 }
 

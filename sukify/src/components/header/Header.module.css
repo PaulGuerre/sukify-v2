@@ -48,6 +48,7 @@
     text-decoration: none;
     color: white;
     padding-left: 16px;
+    transition: 0.5s;
 }
 
 .playlist {
@@ -62,6 +63,7 @@
 }
 
 .link:hover {
+    transition: 0.5s;
     color: #E0E0E0;
 }
 
