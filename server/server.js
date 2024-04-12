@@ -287,7 +287,7 @@ app.get('/getMusic/:musicID', checkToken, (req, res) => {
     }
 
     console.log('Music retrieved');
-    res.sendFile(musicsFolder + musicID + '.mp3'); 
+    res.sendFile(musicsFolder + musicID + '.mp3');
 });
 
 /**
